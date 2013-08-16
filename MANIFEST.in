@@ -1,0 +1,12 @@
+include setup.py
+graft docs
+graft tests
+graft */config
+prune  tests/__pycache__
+global-exclude *.pyc
+global-exclude *.pyo
+include VERSION
+include DESCRIPTION
+include PACKAGE_NAME
+include requirements.txt
+include *.py
