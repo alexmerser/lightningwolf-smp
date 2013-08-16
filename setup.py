@@ -3,7 +3,7 @@
 from __future__ import with_statement, division, absolute_import
 
 try:
-    from setuptools import setup, Command
+    from setuptools import setup, Command, find_packages
 except ImportError:
     from distutils.core import setup, Command
 
@@ -31,10 +31,17 @@ def get_package_name():
     return package_name, dir_name
 
 
+def get_requirements():
+    with open("requirements.txt") as f:
+        return [line.strip() for line in f]
+
+
 def main():
     __package_name__, __dir_name__ = get_package_name()
     __version__ = get_version()
     __description__ = get_description()
+    __packages__ = find_packages()
+    __requirements__ = get_requirements()
 
     setup(
         name=__package_name__,
@@ -42,16 +49,22 @@ def main():
         author="Andrew Carter",
         author_email="andrewjcarter@gmail.com",
         description=__description__,
+        long_description=open('README.rst').read() + '\n\n' + open('HISTORY.rst').read(),
         license="MIT",
         keywords="example documentation tutorial",
         url="http://lightningwolf.net/an_example_pypi_project",
-        packages=['an_example_pypi_project', 'tests'],
-        long_description=open('README.rst').read() + '\n\n' +
-                         open('HISTORY.rst').read(),
+        packages=__packages__,
+        install_requires=__requirements__,
+        platforms=['unix', 'linux', 'osx'],
         classifiers=[
             "Development Status :: 3 - Alpha",
-            "Topic :: Utilities",
-            "License :: OSI Approved :: BSD License",
+            'Environment :: Web Environment',
+            'Intended Audience :: Developers',
+            'Natural Language :: Polish',
+            'Topic :: Server :: Utilities',
+            'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
+            'License :: OSI Approved :: MIT License',
+            'Programming Language :: Python',
         ],
     )
 
