@@ -1,28 +1,66 @@
-import os
-from setuptools import setup
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+from __future__ import with_statement, division, absolute_import
 
-# Utility function to read the README file.
-# Used for the long_description.  It's nice, because now 1) we have a top level
-# README file and 2) it's easier to type in the README file than to put a raw
-# string in below ...
-def read(fname):
-    return open(os.path.join(os.path.dirname(__file__), fname)).read()
+try:
+    from setuptools import setup, Command
+except ImportError:
+    from distutils.core import setup, Command
 
-setup(
-    name = "an_example_pypi_project",
-    version = "0.0.4",
-    author = "Andrew Carter",
-    author_email = "andrewjcarter@gmail.com",
-    description = ("An demonstration of how to create, document, and publish "
-                                   "to the cheese shop a5 pypi.org."),
-    license = "BSD",
-    keywords = "example documentation tutorial",
-    url = "http://packages.python.org/an_example_pypi_project",
-    packages=['an_example_pypi_project', 'tests'],
-    long_description=read('README'),
-    classifiers=[
-        "Development Status :: 3 - Alpha",
-        "Topic :: Utilities",
-        "License :: OSI Approved :: BSD License",
-    ],
-)
+
+def get_version():
+    """Get current version from VERSION file"""
+    with open("VERSION") as f:
+        return f.readline().strip()
+
+
+def get_description():
+    """Get current package description"""
+    with open("DESCRIPTION") as f:
+        return f.read()
+
+
+def get_long_description():
+    """Get current package description"""
+    with open("LONG_DESCRIPTION") as f:
+        return f.read()
+
+
+def get_package_name():
+    """Automatically figure out current package name"""
+    import os.path
+    with open("PACKAGE_NAME") as f:
+        package_name = f.readline().strip()
+    dir_name = package_name.replace("-", "_")  # reverse PyPI name normalization
+    package_exists = os.path.exists(os.path.join(dir_name, "__init__.py"))
+    assert package_exists, "Cannot get package name automatically"  # package name should be in the current dir as well!
+    return package_name, dir_name
+
+
+def main():
+    __package_name__, __dir_name__ = get_package_name()
+    __version__ = get_version()
+    __description__ = get_description()
+    __long_description__ = get_long_description()
+
+    setup(
+        name=__package_name__,
+        version=__version__,
+        author="Andrew Carter",
+        author_email="andrewjcarter@gmail.com",
+        description=__description__,
+        license="MIT",
+        keywords="example documentation tutorial",
+        url="http://lightningwolf.net/an_example_pypi_project",
+        packages=['an_example_pypi_project', 'tests'],
+        long_description=__long_description__,
+        classifiers=[
+            "Development Status :: 3 - Alpha",
+            "Topic :: Utilities",
+            "License :: OSI Approved :: BSD License",
+        ],
+    )
+
+
+if __name__ == '__main__':
+    main()
