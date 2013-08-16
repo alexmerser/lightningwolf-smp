@@ -2,10 +2,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import with_statement, division, absolute_import
 
+
 try:
     from setuptools import setup, Command, find_packages
 except ImportError:
     from distutils.core import setup, Command
+    from findpackages import find_packages
 
 
 def get_version():
@@ -46,12 +48,11 @@ def main():
     setup(
         name=__package_name__,
         version=__version__,
-        author="Andrew Carter",
-        author_email="andrewjcarter@gmail.com",
+        author="Arkadiusz Tułodziecki",
+        author_email="atulodzi@gmail.com",
         description=__description__,
         long_description=open('README.rst').read() + '\n\n' + open('HISTORY.rst').read(),
         license="MIT",
-        keywords="example documentation tutorial",
         url="http://lightningwolf.net/an_example_pypi_project",
         packages=__packages__,
         install_requires=__requirements__,
