@@ -20,12 +20,6 @@ def get_description():
         return f.read()
 
 
-def get_long_description():
-    """Get current package description"""
-    with open("LONG_DESCRIPTION") as f:
-        return f.read()
-
-
 def get_package_name():
     """Automatically figure out current package name"""
     import os.path
@@ -41,7 +35,6 @@ def main():
     __package_name__, __dir_name__ = get_package_name()
     __version__ = get_version()
     __description__ = get_description()
-    __long_description__ = get_long_description()
 
     setup(
         name=__package_name__,
@@ -53,7 +46,8 @@ def main():
         keywords="example documentation tutorial",
         url="http://lightningwolf.net/an_example_pypi_project",
         packages=['an_example_pypi_project', 'tests'],
-        long_description=__long_description__,
+        long_description=open('README.rst').read() + '\n\n' +
+                         open('HISTORY.rst').read(),
         classifiers=[
             "Development Status :: 3 - Alpha",
             "Topic :: Utilities",
