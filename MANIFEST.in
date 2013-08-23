@@ -6,6 +6,7 @@ graft */config
 prune  tests/__pycache__
 global-exclude *.pyc
 global-exclude *.pyo
+global-include *.rst
 include VERSION
 include DESCRIPTION
 include PACKAGE_NAME
