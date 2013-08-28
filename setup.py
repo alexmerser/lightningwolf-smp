@@ -10,12 +10,6 @@ except ImportError:
     from findpackages import find_packages
 
 
-def get_version():
-    """Get current version from VERSION file"""
-    with open("VERSION") as f:
-        return f.readline().strip()
-
-
 def get_description():
     """Get current package description"""
     with open("DESCRIPTION") as f:
@@ -40,10 +34,12 @@ def get_requirements():
 
 def main():
     __package_name__, __dir_name__ = get_package_name()
-    __version__ = get_version()
     __description__ = get_description()
     __packages__ = find_packages()
     __requirements__ = get_requirements()
+
+    from lightningwolf_smp.smp import app
+    __version__ = app.config['VERSION']
 
     setup(
         name=__package_name__,

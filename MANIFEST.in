@@ -7,6 +7,8 @@ prune  tests/__pycache__
 global-exclude *.pyc
 global-exclude *.pyo
 global-include *.rst
+recursive-include lightningwolf_smp/static *
+recursive-include lightningwolf_smp/templates *.html
 include VERSION
 include DESCRIPTION
 include PACKAGE_NAME
