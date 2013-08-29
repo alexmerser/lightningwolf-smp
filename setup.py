@@ -38,8 +38,8 @@ def main():
     __packages__ = find_packages()
     __requirements__ = get_requirements()
 
-    from lightningwolf_smp.smp import app
-    __version__ = app.config['VERSION']
+    from lightningwolf_smp import version
+    __version__ = version
 
     setup(
         name=__package_name__,

@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # coding=utf8
-
+version = '0.0.1'
 
 class Config(object):
-    VERSION = '0.0.1'
+    VERSION = version
     DEBUG = False
     TESTING = False
     SQLALCHEMY_DATABASE_URI = 'sqlite://'
