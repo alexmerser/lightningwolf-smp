@@ -6,7 +6,7 @@ import os
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.jqueryuibootstrap import Bootstrap
-from flask.ext.lwadmin import LwAdmin
+from flask.ext.lwadmin import LwAdmin, Navbar
 from flask.ext.login import LoginManager, current_user
 from flask.ext.principal import (
     Principal, 
@@ -39,6 +39,11 @@ Bootstrap(app)
 
 # LwAdmin
 LwAdmin(app)
+
+navbar = Navbar()
+navbar.set_brand(brand_name='SMP')
+navbar.add_menu_item('key.login.success_page', 'Success', 'login.success_page', Navbar.URL_INTERNAL)
+
 
 # Flask-Login
 def init_login():

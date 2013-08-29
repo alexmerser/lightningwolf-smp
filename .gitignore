@@ -13,3 +13,4 @@ develop-eggs
 dist
 eggs
 sdist
+instance
