@@ -1,36 +1,12 @@
 #!/usr/bin/env python
 # coding=utf8
-
-
 from flask import Blueprint, request, redirect, render_template, url_for, session, current_app
 from flask.ext.login import login_user, logout_user
 from flask.ext.principal import Principal, Identity, AnonymousIdentity, identity_changed
-from flask_wtf import Form
-from wtforms import fields, validators
-
-from lightningwolf_smp.application import sentry, db
-from lightningwolf_smp.models import User
+from lightningwolf_smp.forms.login import LoginForm
 
 
 login = Blueprint('login', __name__)
-
-
-# Define login and registration forms (for flask-login)
-class LoginForm(Form):
-    login = fields.TextField(validators=[validators.required()])
-    password = fields.PasswordField(validators=[validators.required()])
-
-    def validate_login(self, field):
-        user = self.get_user()
-
-        if user is None:
-            raise validators.ValidationError(u'Bad login or password')
-
-        if not user.is_correct_password(self.password.data):
-            raise validators.ValidationError(u'Bad login or password')
-
-    def get_user(self):
-        return db.session.query(User).filter_by(username=self.login.data).first()
 
 
 @login.route("/logout")
