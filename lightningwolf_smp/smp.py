@@ -6,13 +6,14 @@ Usage:
   smp.py start
   smp.py init:config
   smp.py init:db
-  smp.py user:create <username> <useremail> <userpass>
+  smp.py user:create <username> <useremail> <userpass> [--credential=<C>]
   smp.py (-h | --help)
   smp.py --version
 
 Options:
   -h --help     Show this screen.
   --version     Show version.
+  --credential=C  The C credential [default: admin] (admin|user)
 
 """
 from docopt import docopt
@@ -67,30 +68,12 @@ if '__main__' == __name__:
         db.create_all()
         print "Tables in Database created"
     if arguments['user:create']:
-        import uuid
-        import hashlib
-        import json
-        import bcrypt
-
-        from lightningwolf_smp.application import db
-        from lightningwolf_smp.models import User
-
-        password = arguments['<userpass>']
-        salt = hashlib.md5(str(uuid.uuid4())).hexdigest()
-        salted = hashlib.sha512(password + salt).hexdigest()
-        hashed = bcrypt.hashpw(salted, bcrypt.gensalt(12))
-
-        admin_permisions = {
-            'role': ['admin', 'user']
-        }
-        user = User(
+        from lightningwolf_smp.utils.user import create_user
+        create_user(
             username=arguments['<username>'],
             email=arguments['<useremail>'],
-            salt=salt,
-            password=hashed,
-            permissions=json.dumps(admin_permisions, indent=4, sort_keys=True)
+            password=arguments['<userpass>'],
+            credential=arguments['--credential']
         )
-        db.session.add(user)
-        db.session.commit()
 
         print "User created"
