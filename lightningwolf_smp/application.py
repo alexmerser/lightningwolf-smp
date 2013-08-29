@@ -43,6 +43,10 @@ LwAdmin(app)
 navbar = Navbar()
 navbar.set_brand(brand_name='SMP')
 navbar.add_menu_item('key.login.success_page', 'Success', 'login.success_page', Navbar.URL_INTERNAL)
+navbar.add_profile_item('key.user', current_user)
+navbar.set_icon('key.user', 'icon-user')
+navbar.add_profile_item('key.logout', 'logout', 'login.logout_page', Navbar.URL_INTERNAL)
+navbar.set_icon('key.logout', 'icon-signout', True)
 
 
 # Flask-Login
