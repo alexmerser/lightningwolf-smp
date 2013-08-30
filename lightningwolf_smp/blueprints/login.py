@@ -3,8 +3,9 @@
 from flask import Blueprint, request, redirect, render_template, url_for, session, current_app
 from flask.ext.login import login_user, logout_user
 from flask.ext.principal import Principal, Identity, AnonymousIdentity, identity_changed
+from flask.ext.lwadmin import create_navbar_fd
 from lightningwolf_smp.forms.login import LoginForm
-from lightningwolf_smp.application import navbar
+from lightningwolf_smp.application import navbar_conf
 
 
 login = Blueprint('login', __name__)
@@ -43,5 +44,6 @@ def login_page():
 
 @login.route("/success", methods=["GET", "POST"])
 def success_page():
+    navbar = create_navbar_fd(navbar_conf)
     navbar.set_active('key.login.success_page')
     return render_template('success.html', lw_navbar=navbar)

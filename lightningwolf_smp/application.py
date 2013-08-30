@@ -40,13 +40,32 @@ Bootstrap(app)
 # LwAdmin
 LwAdmin(app)
 
-navbar = Navbar()
-navbar.set_brand(brand_name='SMP')
-navbar.add_menu_item('key.login.success_page', 'Success', 'login.success_page', Navbar.URL_INTERNAL)
-navbar.add_profile_item('key.user', current_user)
-navbar.set_icon('key.user', 'icon-user')
-navbar.add_profile_item('key.logout', 'logout', 'login.logout_page', Navbar.URL_INTERNAL)
-navbar.set_icon('key.logout', 'icon-signout', True)
+navbar_conf = {
+    'brand': {'brand_name': 'SMP', 'brand_url': '/'},
+    'items': [
+        {
+            'key': 'key.login.success_page',
+            'label': 'Success',
+            'url': 'login.success_page',
+            'type': Navbar.URL_INTERNAL
+        }
+    ],
+    'profile': [
+        {
+            'key': 'key.user',
+            'label': current_user,
+            'icon': 'icon-user'
+        },
+        {
+            'key': 'key.logout',
+            'label': 'logout',
+            'url': 'login.logout_page',
+            'type': Navbar.URL_INTERNAL,
+            'icon': 'icon-signout',
+            'only_icon': True
+        }
+    ]
+}
 
 
 # Flask-Login
