@@ -54,7 +54,7 @@ def authorisation_failed(e):
 
     return redirect(url_for('login.login_page'))
 
-if '__main__' == __name__:
+def main():
     __version__ = app.config['VERSION']
     arguments = docopt(__doc__, version=__version__)
     if arguments['start']:
@@ -77,3 +77,6 @@ if '__main__' == __name__:
         )
 
         print "User created"
+
+if __name__ == '__main__':
+    main()

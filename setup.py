@@ -53,6 +53,11 @@ def main():
         packages=__packages__,
         install_requires=__requirements__,
         platforms=['unix', 'linux', 'osx'],
+        entry_points={
+            'console_scripts': [
+                'smp = lightningwolf_smp.smp:main',
+            ],
+        },
         classifiers=[
             "Development Status :: 3 - Alpha",
             'Environment :: Web Environment',
