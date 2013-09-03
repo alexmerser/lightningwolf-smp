@@ -1,0 +1,37 @@
+#!/usr/bin/env python
+# coding=utf8
+from flask import Blueprint, request, redirect, render_template, url_for, session, current_app
+from flask.ext.login import login_required
+from flask.ext.lwadmin import create_navbar_fd
+from lightningwolf_smp.application import app_permissions, navbar_conf
+
+
+main = Blueprint('main', __name__)
+
+
+user_permission = app_permissions['user']
+admin_permission = app_permissions['admin']
+
+
+@main.route('/')
+@main.route('/index')
+@login_required
+def main_page():
+    navbar = create_navbar_fd(navbar_conf)
+    return render_template('main/index.html', lw_navbar=navbar)
+
+
+@main.route("/user", methods=["GET"])
+@user_permission.require(http_exception=403)
+def user_page():
+    navbar = create_navbar_fd(navbar_conf)
+    navbar.set_active('key.main.user_page')
+    return render_template('main/user.html', lw_navbar=navbar)
+
+
+@main.route("/admin", methods=["GET"])
+@admin_permission.require(http_exception=403)
+def admin_page():
+    navbar = create_navbar_fd(navbar_conf)
+    navbar.set_active('key.main.admin_page')
+    return render_template('main/admin.html', lw_navbar=navbar)

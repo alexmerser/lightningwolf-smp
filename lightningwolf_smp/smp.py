@@ -19,27 +19,19 @@ Options:
 from docopt import docopt
 
 from flask import (
-    request,
-    Response,
-    send_from_directory,
     redirect,
     url_for,
     flash,
-    g,
-    render_template)
+    g)
 
 from lightningwolf_smp.application import app
+from lightningwolf_smp.blueprints import main
 from lightningwolf_smp.blueprints import login
 
 
 """Blueprints"""
+app.register_blueprint(main)
 app.register_blueprint(login)
-
-
-@app.route('/')
-@app.route('/index')
-def index_page():
-    return redirect(url_for('login.login_page'))
 
 
 @app.errorhandler(401)
@@ -54,6 +46,7 @@ def authorisation_failed(e):
 
     return redirect(url_for('login.login_page'))
 
+
 def main():
     __version__ = app.config['VERSION']
     arguments = docopt(__doc__, version=__version__)
@@ -62,10 +55,8 @@ def main():
     if arguments['init:config']:
         print(arguments)
     if arguments['init:db']:
-        from lightningwolf_smp.application import db
-        from lightningwolf_smp.models import *
-        # db.drop_all()
-        db.create_all()
+        from lightningwolf_smp.utils.creator import generate
+        generate()
         print "Tables in Database created"
     if arguments['user:create']:
         from lightningwolf_smp.utils.user import create_user

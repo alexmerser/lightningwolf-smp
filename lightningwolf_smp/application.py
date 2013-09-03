@@ -44,9 +44,15 @@ navbar_conf = {
     'brand': {'brand_name': 'SMP', 'brand_url': '/'},
     'items': [
         {
-            'key': 'key.login.success_page',
-            'label': 'Success',
-            'url': 'login.success_page',
+            'key': 'key.main.user_page',
+            'label': 'User',
+            'url': 'main.user_page',
+            'type': Navbar.URL_INTERNAL
+        },
+        {
+            'key': 'key.main.admin_page',
+            'label': 'Admin',
+            'url': 'main.admin_page',
             'type': Navbar.URL_INTERNAL
         }
     ],
