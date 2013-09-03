@@ -34,45 +34,6 @@ if app.config['SENTRY'] is True:
 else:
     sentry = False
 
-# Bootstrap
-Bootstrap(app)
-
-# LwAdmin
-LwAdmin(app)
-
-navbar_conf = {
-    'brand': {'brand_name': 'SMP', 'brand_url': '/'},
-    'items': [
-        {
-            'key': 'key.main.user_page',
-            'label': 'User',
-            'url': 'main.user_page',
-            'type': Navbar.URL_INTERNAL
-        },
-        {
-            'key': 'key.main.admin_page',
-            'label': 'Admin',
-            'url': 'main.admin_page',
-            'type': Navbar.URL_INTERNAL
-        }
-    ],
-    'profile': [
-        {
-            'key': 'key.user',
-            'label': current_user,
-            'icon': 'icon-user'
-        },
-        {
-            'key': 'key.logout',
-            'label': 'logout',
-            'url': 'login.logout_page',
-            'type': Navbar.URL_INTERNAL,
-            'icon': 'icon-signout',
-            'only_icon': True
-        }
-    ]
-}
-
 
 # Flask-Login
 def init_login():
@@ -120,3 +81,45 @@ def on_identity_loaded(sender, identity):
     if hasattr(current_user, 'roles'):
         for role in current_user.roles():
             identity.provides.add(RoleNeed(role))
+
+# Bootstrap
+Bootstrap(app)
+
+# LwAdmin
+LwAdmin(app)
+
+navbar_conf = {
+    'brand': {'brand_name': 'SMP', 'brand_url': '/'},
+    'permissions': app_permissions,
+    'items': [
+        {
+            'key': 'key.main.user_page',
+            'label': 'User',
+            'url': 'main.user_page',
+            'type': Navbar.URL_INTERNAL,
+            'credential': 'user'
+        },
+        {
+            'key': 'key.main.admin_page',
+            'label': 'Admin',
+            'url': 'main.admin_page',
+            'type': Navbar.URL_INTERNAL,
+            'credential': 'admin'
+        }
+    ],
+    'profile': [
+        {
+            'key': 'key.user',
+            'label': current_user,
+            'icon': 'icon-user'
+        },
+        {
+            'key': 'key.logout',
+            'label': 'logout',
+            'url': 'login.logout_page',
+            'type': Navbar.URL_INTERNAL,
+            'icon': 'icon-signout',
+            'only_icon': True
+        }
+    ]
+}

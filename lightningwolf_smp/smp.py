@@ -42,7 +42,7 @@ def authentication_failed(e):
 
 @app.errorhandler(403)
 def authorisation_failed(e):
-    flash(('Your current identity is {id}. You need special privileges to access this page').format(id=g.identity.user.login))
+    flash(('Your current identity is {id}. You need special privileges to access this page').format(id=g.identity.user.username))
 
     return redirect(url_for('login.login_page'))
 
