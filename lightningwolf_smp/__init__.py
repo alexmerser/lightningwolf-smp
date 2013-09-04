@@ -7,8 +7,7 @@ class Config(object):
     DEBUG = False
     TESTING = False
     SQLALCHEMY_DATABASE_URI = 'sqlite://'
-    SENTRY = False
-    SENTRY_DSN = None
+    SENTRY_DSN = ''
 
 class DevelopmentConfig(Config):
     DEBUG = True

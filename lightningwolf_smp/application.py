@@ -15,6 +15,8 @@ from flask.ext.principal import (
     RoleNeed, 
     identity_loaded, 
     UserNeed)
+from raven.contrib.flask import Sentry
+from flask_debugtoolbar import DebugToolbarExtension
 
 app = Flask(__name__)
 
@@ -24,15 +26,14 @@ envvar = 'LIGHTNINGWOLF_SETTINGS'
 if os.environ.get(envvar, None):
     app.config.from_envvar(envvar)
 
+# Sentry
+sentry = Sentry(app, dsn=app.config['SENTRY_DSN'])
+
+# Debug Toolbar
+toolbar = DebugToolbarExtension(app)
+
 # SQLAlchemy handler
 db = SQLAlchemy(app)
-
-# Sentry
-if app.config['SENTRY'] is True:
-    from raven.contrib.flask import Sentry
-    sentry = Sentry(app)
-else:
-    sentry = False
 
 
 # Flask-Login
