@@ -33,12 +33,9 @@ class User(db.Model):
         return self.id
 
     def is_correct_password(self, password):
-        salted = hashlib.sha512(password + self.salt).hexdigest()
-        hashed = bcrypt.hashpw(salted, bcrypt.gensalt(12))
-        if bcrypt.hashpw(salted, hashed) == hashed:
-            return True
-        else:
-            return False
+        salted = hashlib.sha512(password + self.salt).hexdigest().encode('utf-8')
+        hashed = self.password.encode('utf-8')
+        return bool(bcrypt.hashpw(salted, hashed) == hashed)
 
     def roles(self):
         return json.loads(self.permissions)['role']
