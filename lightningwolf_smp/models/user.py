@@ -40,9 +40,6 @@ class User(db.Model):
     def roles(self):
         return json.loads(self.permissions)['role']
 
-    def __repr__(self):
-        return '<User %r>' % self.login
-
     def save(self):
         db.session.add(self)
         return db.session.commit()
