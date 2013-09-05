@@ -69,4 +69,36 @@ Finalize install
 Configuration
 -------------
 
+Database
+````````
+
+Create Mysql Databese with user
+
+
+#. Create config folder and file in it:
+
+::
+
+    $ mkdir config
+    $ touch config/config.py
+
+#. Sample Configuration:
+
+::
+
+    #!/usr/bin/env python
+    # coding=utf8
+
+    DEBUG = True
+    SECRET_KEY = '<write something here>'
+    SQLALCHEMY_DATABASE_URI = 'mysql://<user>:<pass>@<ip or hostname>/<db name>'
+    SENTRY_DSN = '<Nothing or Your Sentry DSN>'
+
+
+#. Use this config in virtual environment:
+
+::
+
+    $ export LIGHTNINGWOLF_SETTINGS=<path to config.py file>
+
 **TODO**
