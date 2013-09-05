@@ -13,4 +13,4 @@ develop-eggs
 dist
 eggs
 sdist
-instance
+config
