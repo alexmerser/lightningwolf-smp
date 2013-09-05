@@ -3,3 +3,4 @@
 from lightningwolf_smp.models.user import *
 from lightningwolf_smp.models.domain import *
 from lightningwolf_smp.models.ftp import *
+from lightningwolf_smp.models.mail import *
