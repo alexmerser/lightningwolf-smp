@@ -13,10 +13,10 @@ class MailVirtualDomain(db.Model):
     customer = db.relationship('User', backref=db.backref('ftp_group', lazy='dynamic'))
 
     def __repr__(self):
-        return '<MailVirtualDomain %r>' % self.group_name
+        return '<MailVirtualDomain %r>' % self.name
 
     def __unicode__(self):
-        return self.group_name
+        return self.name
 
 
 class MailVirtualUser(db.Model):
@@ -31,10 +31,10 @@ class MailVirtualUser(db.Model):
     email = db.Column(db.String(100), unique=True, nullable=False)
 
     def __repr__(self):
-        return '<MailVirtualDomain %r>' % self.group_name
+        return '<MailVirtualUser %r>' % self.email
 
     def __unicode__(self):
-        return self.group_name
+        return self.email
 
 
 class MailVirtualAlias(db.Model):
@@ -49,10 +49,10 @@ class MailVirtualAlias(db.Model):
     destination = db.Column(db.String(100), nullable=False)
 
     def __repr__(self):
-        return '<MailVirtualDomain %r>' % self.group_name
+        return '<MailVirtualAlias %r -> %r>' % (self.source, self.destination)
 
     def __unicode__(self):
-        return self.group_name
+        return self.source + " -> " + self.destination
 
 
 """

@@ -6,7 +6,6 @@ import hashlib
 
 
 from lightningwolf_smp.application import db
-from sqlalchemy.dialects.mysql import MEDIUMTEXT
 
 
 class User(db.Model):
@@ -17,7 +16,7 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True)
     salt = db.Column(db.String(128), nullable=False)
     password = db.Column(db.String(128), nullable=False)
-    permissions = db.Column(MEDIUMTEXT, nullable=False)
+    permissions = db.Column(db.Text, nullable=False)
 
     # Flask-Login integration
     def is_authenticated(self):
