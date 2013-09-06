@@ -14,7 +14,7 @@ class SmpLog(db.Model):
     data = db.Column(db.Text, nullable=True)
 
     customer_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    customer = db.relationship('User', backref=db.backref('ftp_user', lazy='dynamic'))
+    customer = db.relationship('User', backref=db.backref('smp_log', lazy='dynamic'))
 
     def __repr__(self):
         return '<SmpLog %r>' % self.action

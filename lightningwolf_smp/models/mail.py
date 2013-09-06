@@ -10,7 +10,7 @@ class MailVirtualDomain(db.Model):
     name = db.Column(db.String(50), unique=True, nullable=False)
 
     customer_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    customer = db.relationship('User', backref=db.backref('ftp_group', lazy='dynamic'))
+    customer = db.relationship('User', backref=db.backref('mail_virtual_domain', lazy='dynamic'))
 
     def __repr__(self):
         return '<MailVirtualDomain %r>' % self.name
@@ -43,7 +43,7 @@ class MailVirtualAlias(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     domain_id = db.Column(db.Integer, db.ForeignKey('mail_virtual_domain.id'))
-    domain = db.relationship('MailVirtualDomain', backref=db.backref('mail_virtual_user', lazy='dynamic'))
+    domain = db.relationship('MailVirtualDomain', backref=db.backref('mail_virtual_alias', lazy='dynamic'))
 
     source = db.Column(db.String(100), nullable=False)
     destination = db.Column(db.String(100), nullable=False)

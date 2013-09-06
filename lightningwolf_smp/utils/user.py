@@ -18,7 +18,7 @@ user_permisions = {
 }
 
 
-def create_user(username, email, password, credential):
+def create_user(username, email, password, credential='user'):
     salt = hashlib.md5(str(uuid.uuid4())).hexdigest()
     salted = hashlib.sha512(password + salt).hexdigest()
     hashed = bcrypt.hashpw(salted, bcrypt.gensalt(12))
@@ -48,6 +48,8 @@ def create_user(username, email, password, credential):
 
 
 def is_unique_user(username):
+    if User.query.filter_by(username=username).first() is None:
+        return True
     return False
 
 
@@ -59,4 +61,6 @@ def is_valid_email(email):
 
 
 def is_unique_email(email):
+    if User.query.filter_by(email=email).first() is None:
+        return True
     return False
