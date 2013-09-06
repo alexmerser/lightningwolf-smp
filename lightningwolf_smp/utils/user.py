@@ -23,6 +23,13 @@ def create_user(username, email, password, credential):
     salted = hashlib.sha512(password + salt).hexdigest()
     hashed = bcrypt.hashpw(salted, bcrypt.gensalt(12))
 
+    if not is_unique_user(username):
+        return "This username: %s is not unique in system. Try again" % username
+    if not is_valid_email(email):
+        return "This e-mail: %s is not valid. Try again" % email
+    if not is_unique_email(email):
+        return "This e-mail: %s is not unique in system. Try again" % email
+
     if credential == 'admin':
         user_credentials = admin_permisions
     else:
@@ -37,3 +44,19 @@ def create_user(username, email, password, credential):
     )
     db.session.add(user)
     db.session.commit()
+    return True
+
+
+def is_unique_user(username):
+    return False
+
+
+def is_valid_email(email):
+    from email_validation import valid_email_address
+    if not valid_email_address(email):
+        return False
+    return True
+
+
+def is_unique_email(email):
+    return False

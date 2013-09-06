@@ -6,7 +6,7 @@ Usage:
   smp.py start
   smp.py init:config
   smp.py init:db
-  smp.py user:create <username> <useremail> <userpass> [--credential=<C>]
+  smp.py user:create <username> <useremail> [--credential=<C>]
   smp.py (-h | --help)
   smp.py --version
 
