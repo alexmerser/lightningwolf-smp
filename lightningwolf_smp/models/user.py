@@ -47,6 +47,9 @@ class User(db.Model):
         db.session.delete(self)
         return db.session.commit()
 
+    def get_username(self):
+        return self.username
+
     def __repr__(self):
         return '<User %r>' % self.username
 
