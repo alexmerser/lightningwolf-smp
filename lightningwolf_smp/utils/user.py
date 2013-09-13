@@ -67,4 +67,4 @@ def is_unique_email(email):
 
 
 def get_user_list():
-    pass
+    return []

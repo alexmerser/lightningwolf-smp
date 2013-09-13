@@ -2,6 +2,91 @@
 {% import 'messages_macros.html' as messages_macros with context -%}
 
 {% block container %}
-    AAA
-{{ messages_macros.messages() }}
+    <h1>Users List</h1>
+    {{ messages_macros.messages() }}
+    <div class="btn-toolbar">
+        <div class="btn-group">
+            <a href="#filtersBootstrapGeneratorModal" role="button" class="btn" data-toggle="modal"><i class="icon icon-th-list"></i> Filters</a>
+        </div>
+        <div class="btn-group pull-right">
+            <a title="New" class="btn btn-primary " href="#"><i class="icon-plus icon-white"></i> New</a>
+        </div>
+    </div>
+
+    <div class="modal hide" id="filtersBootstrapGeneratorModal" tabindex="-1" role="dialog" aria-labelledby="filtersBootstrapGeneratorModalLabel" aria-hidden="true">
+        <form action="#" method="post" class="form-horizontal" style="margin: 0px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="filtersBootstrapGeneratorModalLabel">Filters</h3>
+            </div>
+            <div class="modal-body">
+                <div class="control-group">
+                    <label class="control-label" for="user_filters_username">Username</label>
+                    <div class="controls">
+                        <input type="text" id="user_filters_username" name="user_filters[username][text]" value="" /><br />
+                        <span class="help-inline" generated="true"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" name="user_filters[_csrf_token]" value="0825c62c74bad94832403a155f3206ca" id="user_filters__csrf_token" />
+                <a class="btn" onclick="var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'post'; f.action = this.href;var m = document.createElement('input'); m.setAttribute('type', 'hidden'); m.setAttribute('name', '_csrf_token'); m.setAttribute('value', 'd7c16989a573630e2f6d02680d2280ae'); f.appendChild(m);f.submit();return false;" href="#?_reset">Wyczyść</a>
+                <input class="btn btn-primary" type="submit" value="Szukaj" />
+            </div>
+        </form>
+    </div>
+
+    <form class="form-inline" action="#" method="post">
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr>
+                    <th><input id="lw_admin_list_batch_checkbox" type="checkbox" onclick="checkAll();" /></th>
+                    <th>Id</th>
+                    <th>Username</th>
+                    <th>E-mail</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th colspan="5">result: 1</th>
+                </tr>
+            </tfoot>
+            <tbody>
+                <tr>
+                    <td><input type="checkbox" name="ids[]" value="1" class="lw_admin_batch_checkbox" /></td>
+                    <td>1</td>
+                    <td>Test</td>
+                    <td>test@localhost</td>
+                    <td>
+                        <div class="btn-group pull-right">
+                            <a title="Edit" class="btn btn-small" href="#"><i class="icon-edit"></i> Edit</a>
+                            <a title="Delete" class="btn btn-danger btn-small" onclick="if (confirm('Are you sure?')) { var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'post'; f.action = this.href;var m = document.createElement('input'); m.setAttribute('type', 'hidden'); m.setAttribute('name', 'sf_method'); m.setAttribute('value', 'delete'); f.appendChild(m);var m = document.createElement('input'); m.setAttribute('type', 'hidden'); m.setAttribute('name', '_csrf_token'); m.setAttribute('value', 'd7c16989a573630e2f6d02680d2280ae'); f.appendChild(m);f.submit(); };return false;" href="#"><i class="icon-trash icon-white"></i> Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <script type="text/javascript">
+/* <![CDATA[ */
+function checkAll()
+{
+	var boxes = document.getElementsByTagName('input'); for(var index = 0; index < boxes.length; index++) { box = boxes[index]; if (box.type == 'checkbox' && box.className == 'lw_admin_batch_checkbox') box.checked = document.getElementById('lw_admin_list_batch_checkbox').checked } return true;
+}
+/* ]]> */
+        </script>
+        <div class="btn-toolbar">
+            <div class="btn-group">
+                <select name="batch_action">
+                    <option value="">Chose action</option>
+                    <option value="batchDelete">Delete</option>
+                </select>
+                <input type="hidden" name="_csrf_token" value="d7c16989a573630e2f6d02680d2280ae" />
+                <input class="btn" type="submit" value="ok" />
+            </div>
+            <div class="btn-group pull-right">
+                <a title="New" class="btn btn-primary " href="#"><i class="icon-plus icon-white"></i> New</a>
+            </div>
+        </div>
+    </form>
 {% endblock %}
