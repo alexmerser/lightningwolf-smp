@@ -5,7 +5,7 @@
 {% block container %}
     <h1>Create Users</h1>
     {{ messages_macros.messages() }}
-    <form class="form-horizontal" method="post" action="/backend.php/tw_guard_user">
+    <form class="form-horizontal" method="post" action="{{ url_for('user.user_create') }}">
         {{ form.hidden_tag() if form.hidden_tag }}
         {{ wtf.form_errors(form, False) }}
         {{ wtf.horizontal_field(form.username) }}

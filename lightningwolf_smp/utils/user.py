@@ -8,6 +8,7 @@ import bcrypt
 
 from lightningwolf_smp.application import db
 from lightningwolf_smp.models import User
+from sqlalchemy import exc
 
 
 admin_permisions = {
@@ -22,17 +23,18 @@ def get_user_list():
     return db.session.query(User)
 
 
-def create_user(username, email, password, credential='user'):
+def create_user(username, email, password, credential='user', cli=False):
     salt = hashlib.md5(str(uuid.uuid4())).hexdigest()
     salted = hashlib.sha512(password + salt).hexdigest()
     hashed = bcrypt.hashpw(salted, bcrypt.gensalt(12))
 
-    if not is_unique_user(username):
-        return "This username: %s is not unique in system. Try again" % username
-    if not is_valid_email(email):
-        return "This e-mail: %s is not valid. Try again" % email
-    if not is_unique_email(email):
-        return "This e-mail: %s is not unique in system. Try again" % email
+    if cli:
+        if not is_unique_user(username):
+            return "This username: %s is not unique in system. Try again" % username
+        if not is_valid_email(email):
+            return "This e-mail: %s is not valid. Try again" % email
+        if not is_unique_email(email):
+            return "This e-mail: %s is not unique in system. Try again" % email
 
     if credential == 'admin':
         user_credentials = admin_permisions
@@ -46,9 +48,14 @@ def create_user(username, email, password, credential='user'):
         password=hashed,
         permissions=json.dumps(user_credentials, indent=4, sort_keys=True)
     )
-    db.session.add(user)
-    db.session.commit()
-    return True
+
+    try:
+        db.session.add(user)
+        db.session.commit()
+        return True
+    except exc.SQLAlchemyError:
+        db.session.rollback()
+        return False
 
 
 def is_unique_user(username):

@@ -1,7 +1,13 @@
 #!/usr/bin/env python
 # coding=utf8
-from flask import Blueprint, render_template
-from flask.ext.login import login_required
+from flask import (
+    Blueprint,
+    render_template,
+    flash,
+    redirect,
+    url_for
+)
+
 from flask.ext.lwadmin import create_navbar_fd
 from lightningwolf_smp.application import app_permissions, navbar_conf
 
@@ -35,5 +41,17 @@ def user_create():
     form = FormUserAdd()
     if form.validate_on_submit():
         from lightningwolf_smp.utils.user import create_user
+        rs = create_user(
+            username=form.data['username'],
+            email=form.data['email'],
+            password=form.data['password'],
+            credential=form.data['perm']
+        )
+        if rs is True:
+            flash(u'The new user is created', 'success')
+            return redirect(url_for('user.user_list'))
+        else:
+            flash(u'An error occurred while creating the user', 'error')
+
     navbar = create_navbar_fd(navbar_conf, 'key.user.user_list')
     return render_template('user/create.html', lw_navbar=navbar, form=form)

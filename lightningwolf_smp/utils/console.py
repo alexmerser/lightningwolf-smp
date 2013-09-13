@@ -42,7 +42,8 @@ def parse_arguments(arguments):
             username=username,
             email=email,
             password=password,
-            credential='user'
+            credential='user',
+            cli=True
         )
 
         if user_return is True:
