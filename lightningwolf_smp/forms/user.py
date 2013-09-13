@@ -6,13 +6,15 @@ from wtforms import (
     validators
 )
 
+from lightningwolf_smp.utils.user import is_unique_email, is_unique_user
+
 
 class FormUserAdd(Form):
     username = fields.TextField(
         label='Username',
         description=u'Enter username',
         validators=[
-            validators.Required(mesage=u'Required field'),
+            validators.Required(message=u'Required field'),
             validators.Length(
                 min=2,
                 max=80,
@@ -28,7 +30,7 @@ class FormUserAdd(Form):
     password = fields.PasswordField(
         label='Password',
         validators=[
-            validators.Required(mesage=u'Required field'),
+            validators.Required(message=u'Required field'),
             validators.EqualTo(
                 'repassword',
                 message=u'Passwords must be identical'
@@ -42,7 +44,7 @@ class FormUserAdd(Form):
         label='Email',
         description=u'Enter the user\'s email',
         validators=[
-            validators.Required(mesage=u'Required field'),
+            validators.Required(message=u'Required field'),
             validators.Length(
                 min=7,
                 max=120,
@@ -56,6 +58,14 @@ class FormUserAdd(Form):
         label='User Roles',
         choices=[('user', 'User'), ('admin', 'Admin')],
         validators=[
-            validators.Required(mesage=u'Required field')
+            validators.Required(message=u'Required field')
         ]
     )
+
+    def validate_username(self, field):
+        if not is_unique_user(field.data):
+            raise validators.ValidationError('This username: %s is not unique in system.' % field.data)
+
+    def validate_email(self, field):
+        if not is_unique_email(field.data):
+            raise validators.ValidationError('This e-mail: %s is not unique in system.' % field.data)

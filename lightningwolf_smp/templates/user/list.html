@@ -9,7 +9,7 @@
             <a href="#filtersBootstrapGeneratorModal" role="button" class="btn" data-toggle="modal"><i class="icon icon-th-list"></i> Filters</a>
         </div>
         <div class="btn-group pull-right">
-            <a title="New" class="btn btn-primary " href="#"><i class="icon-plus icon-white"></i> New</a>
+            <a title="New" class="btn btn-primary " href="{{ url_for('user.user_create') }}"><i class="icon-plus icon-white"></i> New</a>
         </div>
     </div>
 
@@ -85,7 +85,7 @@ function checkAll()
                 <input class="btn" type="submit" value="ok" />
             </div>
             <div class="btn-group pull-right">
-                <a title="New" class="btn btn-primary " href="#"><i class="icon-plus icon-white"></i> New</a>
+                <a title="New" class="btn btn-primary " href="{{ url_for('user.user_create') }}"><i class="icon-plus icon-white"></i> New</a>
             </div>
         </div>
     </form>
