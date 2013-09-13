@@ -94,11 +94,11 @@ navbar_conf = {
     'permissions': app_permissions,
     'items': [
         {
-            'key': 'key.main.user_page',
+            'key': 'key.user.user_list',
             'label': 'User',
-            'url': 'main.user_page',
+            'url': 'user.user_list',
             'type': Navbar.URL_INTERNAL,
-            'credential': 'user'
+            'credential': 'admin'
         },
         {
             'key': 'key.main.admin_page',
@@ -110,9 +110,11 @@ navbar_conf = {
     ],
     'profile': [
         {
-            'key': 'key.user',
+            'key': 'key.user.user_page',
             'label': current_user,
-            'icon': 'icon-user'
+            'icon': 'icon-user',
+            'url': 'user.user_page',
+            'credential': 'user'
         },
         {
             'key': 'key.logout',

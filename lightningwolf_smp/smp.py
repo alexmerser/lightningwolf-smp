@@ -27,11 +27,13 @@ from flask import (
 from lightningwolf_smp.application import app
 from lightningwolf_smp.blueprints import main
 from lightningwolf_smp.blueprints import login
+from lightningwolf_smp.blueprints import user
 
 
 """Blueprints"""
 app.register_blueprint(main)
 app.register_blueprint(login)
+app.register_blueprint(user)
 
 
 @app.errorhandler(401)

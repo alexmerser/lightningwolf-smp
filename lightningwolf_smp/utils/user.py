@@ -64,3 +64,7 @@ def is_unique_email(email):
     if User.query.filter_by(email=email).first() is None:
         return True
     return False
+
+
+def get_user_list():
+    pass

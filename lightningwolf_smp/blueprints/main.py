@@ -21,13 +21,6 @@ def main_page():
     return render_template('main/index.html', lw_navbar=navbar)
 
 
-@main.route("/user", methods=["GET"])
-@user_permission.require(http_exception=403)
-def user_page():
-    navbar = create_navbar_fd(navbar_conf, 'key.main.user_page')
-    return render_template('main/user.html', lw_navbar=navbar)
-
-
 @main.route("/admin", methods=["GET"])
 @admin_permission.require(http_exception=403)
 def admin_page():
