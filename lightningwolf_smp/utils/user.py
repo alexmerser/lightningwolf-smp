@@ -18,6 +18,10 @@ user_permisions = {
 }
 
 
+def get_user_list():
+    return db.session.query(User)
+
+
 def create_user(username, email, password, credential='user'):
     salt = hashlib.md5(str(uuid.uuid4())).hexdigest()
     salted = hashlib.sha512(password + salt).hexdigest()
@@ -64,7 +68,3 @@ def is_unique_email(email):
     if User.query.filter_by(email=email).first() is None:
         return True
     return False
-
-
-def get_user_list():
-    return []
