@@ -50,6 +50,13 @@ class User(db.Model):
     def get_username(self):
         return self.username
 
+    def get_perm(self):
+        roles = self.roles()
+        for role in roles:
+            if role == 'admin':
+                return 'admin'
+        return 'user'
+
     def __repr__(self):
         return '<User %r>' % self.username
 

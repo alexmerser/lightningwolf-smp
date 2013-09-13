@@ -23,6 +23,10 @@ def get_user_list():
     return db.session.query(User)
 
 
+def get_user(id):
+    return db.session.query(User).get(id)
+
+
 def create_user(username, email, password, credential='user', cli=False):
     salt = hashlib.md5(str(uuid.uuid4())).hexdigest()
     salted = hashlib.sha512(password + salt).hexdigest()
