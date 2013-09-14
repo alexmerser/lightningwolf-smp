@@ -61,7 +61,6 @@
                     <td>{{ item.email }}</td>
                     <td>
                         <div class="btn-group pull-right">
-                            <a title="Password" class="btn btn-small" href="{{ url_for('user.user_edit', id=item.id) }}"><i class="icon-edit"></i> Password</a>
                             <a title="Edit" class="btn btn-small" href="{{ url_for('user.user_edit', id=item.id) }}"><i class="icon-edit"></i> Edit</a>
                             {% if item.username != current_user.get_username() %}
                             <a title="Delete" class="btn btn-danger btn-small" onclick="if (confirm('Are you sure?')) { var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'post'; f.action = this.href;var m = document.createElement('input'); m.setAttribute('type', 'hidden'); m.setAttribute('name', 'sf_method'); m.setAttribute('value', 'delete'); f.appendChild(m);var m = document.createElement('input'); m.setAttribute('type', 'hidden'); m.setAttribute('name', '_csrf_token'); m.setAttribute('value', 'd7c16989a573630e2f6d02680d2280ae'); f.appendChild(m);f.submit(); };return false;" href="#"><i class="icon-trash icon-white"></i> Delete</a>

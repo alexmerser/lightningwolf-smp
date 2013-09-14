@@ -22,7 +22,9 @@ from flask import (
     redirect,
     url_for,
     flash,
-    g)
+    render_template,
+    g
+)
 
 from lightningwolf_smp.application import app
 from lightningwolf_smp.blueprints import main
@@ -44,9 +46,17 @@ def authentication_failed(e):
 
 @app.errorhandler(403)
 def authorisation_failed(e):
-    flash(('Your current identity is {id}. You need special privileges to access this page').format(id=g.identity.user.username))
+    flash(
+        (
+            'Your current identity is {id}. You need special privileges to access this page'
+        ).format(id=g.identity.user.username)
+    )
 
     return redirect(url_for('login.login_page'))
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('jqueryuibootstrap_404.html', error=error), 404
 
 
 def main():

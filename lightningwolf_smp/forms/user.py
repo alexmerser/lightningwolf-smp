@@ -71,11 +71,10 @@ class FormUserAdd(Form):
             raise validators.ValidationError('This e-mail: %s is not unique in system.' % field.data)
 
 
-class FormUserChangePassword(Form):
+class BaseFormUserChangePassword(Form):
     password = fields.PasswordField(
         label='Password',
         validators=[
-            validators.Required(message=u'Required field'),
             validators.EqualTo(
                 'repassword',
                 message=u'Passwords must be identical'
@@ -87,6 +86,9 @@ class FormUserChangePassword(Form):
 
 
 class FormUserChangeEmail(Form):
+    def setId(self, id):
+        self.id = id
+
     email = fields.TextField(
         label='Email',
         description=u'Enter the user\'s email',
@@ -102,11 +104,11 @@ class FormUserChangeEmail(Form):
     )
 
     def validate_email(self, field):
-        if not is_unique_email(field.data):
+        if not is_unique_email(field.data, id=self.id):
             raise validators.ValidationError('This e-mail: %s is not unique in system.' % field.data)
 
 
-class FormUserEdit(FormUserChangeEmail):
+class FormUserEdit(BaseFormUserChangePassword, FormUserChangeEmail):
     perm = fields.SelectField(
         label='User Roles',
         choices=[(u'user', u'User'), (u'admin', u'Admin')],

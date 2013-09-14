@@ -5,11 +5,16 @@
 {% block container %}
     <h1>Edit User: {{ user.get_username() }}</h1>
     {{ messages_macros.messages() }}
-    <form class="form-horizontal" method="post" action="{{ url_for('user.user_create') }}">
+    <form class="form-horizontal" method="post" action="{{ url_for('user.user_edit', id=user.get_id()) }}">
         {{ form.hidden_tag() if form.hidden_tag }}
         {{ wtf.form_errors(form, False) }}
         {{ wtf.horizontal_field(form.email) }}
         {{ wtf.horizontal_field(form.perm) }}
+
+        <legend>Optional password change</legend>
+        {{ wtf.horizontal_field(form.password) }}
+        {{ wtf.horizontal_field(form.repassword) }}
+
         <div class="form-actions">
             <div class="btn-group pull-left">
                 <input class="btn btn-primary" type="submit" value="Save" />

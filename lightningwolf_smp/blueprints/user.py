@@ -6,7 +6,8 @@ from flask import (
     flash,
     redirect,
     request,
-    url_for
+    url_for,
+    abort
 )
 
 from flask.ext.lwadmin import create_navbar_fd
@@ -61,28 +62,33 @@ def user_create():
 @admin_permission.require(http_exception=403)
 def user_edit(id):
     from lightningwolf_smp.forms.user import FormUserEdit
+    from lightningwolf_smp.utils.user import get_user
+    user = get_user(id)
+    if user is None:
+        abort(404)
 
     if request.method == 'GET':
-        from lightningwolf_smp.utils.user import get_user
-        User = get_user(id)
         form = FormUserEdit(
-            email=User.email,
-            perm=User.get_perm()
+            email=user.email,
+            perm=user.get_perm()
         )
 
-    # if form.validate_on_submit():
-    #     from lightningwolf_smp.utils.user import create_user
-    #     rs = create_user(
-    #         username=form.data['username'],
-    #         email=form.data['email'],
-    #         password=form.data['password'],
-    #         credential=form.data['perm']
-    #     )
-    #     if rs is True:
-    #         flash(u'The new user is created', 'success')
-    #         return redirect(url_for('user.user_list'))
-    #     else:
-    #         flash(u'An error occurred while creating the user', 'error')
+    if request.method == 'POST':
+        form = FormUserEdit()
+        form.setId(user.get_id())
+        if form.validate_on_submit():
+            from lightningwolf_smp.utils.user import edit_user
+            rs = edit_user(
+                user=user,
+                email=form.data['email'],
+                password=form.data['password'],
+                credential=form.data['perm']
+            )
+            if rs is True:
+                flash(u'User `%s` data changed' % user.get_username(), 'success')
+                return redirect(url_for('user.user_list'))
+            else:
+                flash(u'An error occurred while updating the user', 'error')
 
     navbar = create_navbar_fd(navbar_conf, 'key.user.user_list')
-    return render_template('user/edit.html', lw_navbar=navbar, form=form, user=User)
+    return render_template('user/edit.html', lw_navbar=navbar, form=form, user=user)
