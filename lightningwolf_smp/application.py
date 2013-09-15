@@ -5,7 +5,7 @@ import os
 
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.jqueryuibootstrap import Bootstrap
+from flask.ext.jqueryuibootstrap import JqueryUiBootstrap
 from flask.ext.lwadmin import LwAdmin
 from flask.ext.lwadmin.navbar import Navbar
 from flask.ext.login import LoginManager, current_user
@@ -16,6 +16,7 @@ from flask.ext.principal import (
     RoleNeed, 
     identity_loaded, 
     UserNeed)
+from flask.ext.babel import Babel
 from raven.contrib.flask import Sentry
 from flask_debugtoolbar import DebugToolbarExtension
 
@@ -26,6 +27,9 @@ app.config.from_object('lightningwolf_smp.Config')
 envvar = 'LIGHTNINGWOLF_SETTINGS'
 if os.environ.get(envvar, None):
     app.config.from_envvar(envvar)
+
+# Babel
+babel = Babel(app)
 
 # Sentry
 sentry = Sentry(app, dsn=app.config['SENTRY_DSN'])
@@ -84,8 +88,8 @@ def on_identity_loaded(sender, identity):
         for role in current_user.roles():
             identity.provides.add(RoleNeed(role))
 
-# Bootstrap
-Bootstrap(app)
+# Flask-JqueryUiBootstrap
+JqueryUiBootstrap(app)
 
 # LwAdmin
 LwAdmin(app)
