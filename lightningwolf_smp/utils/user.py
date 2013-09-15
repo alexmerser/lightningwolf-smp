@@ -63,6 +63,12 @@ def create_user(username, email, password, credential='user', cli=False):
 
 def edit_user(user, email, password, credential='user', cli=False):
 
+    if cli:
+        if not is_valid_email(email):
+            return "This e-mail: %s is not valid. Try again" % email
+        if not is_unique_email(email, user.get_id()):
+            return "This e-mail: %s is not unique in system. Try again" % email
+
     if password:
         salted = hashlib.sha512(password + user.salt).hexdigest()
         user.password = bcrypt.hashpw(salted, bcrypt.gensalt(12))
