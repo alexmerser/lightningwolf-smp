@@ -71,6 +71,23 @@ class FormUserAdd(Form):
             raise validators.ValidationError('This e-mail: %s is not unique in system.' % field.data)
 
 
+class FormUsernameFilter(Form):
+    username = fields.TextField(
+        label='Username',
+        validators=[
+            validators.Length(
+                min=2,
+                max=80,
+                message=u'Username must be a minimum of %d and maximum of %d characters' % (2, 80)
+            ),
+            validators.Regexp(
+                regex=r'^[\w_\.]+$',
+                message=u'The user name can contain only letters, numbers, and character _ and .'
+            )
+        ]
+    )
+
+
 class BaseFormUserChangePassword(Form):
     password = fields.PasswordField(
         label='Password',

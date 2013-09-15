@@ -32,10 +32,17 @@ def user_page():
 @admin_permission.require(http_exception=403)
 def user_list():
     from lightningwolf_smp.utils.user import get_user_list
+    from lightningwolf_smp.forms.user import FormUsernameFilter
+    filter = FormUsernameFilter()
     users = get_user_list()
     navbar = create_navbar_fd(navbar_conf, 'key.user.user_list')
-    return render_template('user/list.html', lw_navbar=navbar, list=users)
+    return render_template('user/list.html', lw_navbar=navbar, list=users, filter=filter)
 
+
+@user.route('/admin/user/filter', methods=["POST"])
+@admin_permission.require(http_exception=403)
+def user_filter():
+    return redirect(url_for('user.user_list'))
 
 @user.route('/admin/user/create', methods=["GET", "POST"])
 @admin_permission.require(http_exception=403)

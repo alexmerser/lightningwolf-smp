@@ -5,7 +5,21 @@
 {% block container %}
     <h1>Users List {{ current_user }}</h1>
     {{ messages_macros.messages() }}
-    {{ filters_macros.filter() }}
+
+    <div class="btn-toolbar">
+        <div class="btn-group">
+            {% if filter %}{{ filters_macros.filter_button('filtersBootstrapGeneratorModal') }}{%  endif %}
+        </div>
+        <div class="btn-group pull-right">
+            <a title="New" class="btn btn-primary " href="{{ url_for('user.user_create') }}">
+                <i class="icon-plus icon-white"></i> New
+            </a>
+        </div>
+    </div>
+
+    {% if filter %}
+    {{ filters_macros.filter_modal(id='filtersBootstrapGeneratorModal', filter_form=filter, action=url_for('user.user_filter')) }}
+    {%  endif %}
 
     <form class="form-inline" action="#" method="post">
         <table class="table table-hover table-striped">
