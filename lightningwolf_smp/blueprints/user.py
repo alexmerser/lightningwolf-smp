@@ -10,7 +10,7 @@ from flask import (
     abort
 )
 
-from flask.ext.lwadmin import create_navbar_fd
+from flask.ext.lwadmin.navbar import create_navbar_fd
 from lightningwolf_smp.application import app_permissions, navbar_conf
 
 
@@ -36,6 +36,7 @@ def user_list():
     navbar = create_navbar_fd(navbar_conf, 'key.user.user_list')
     return render_template('user/list.html', lw_navbar=navbar, list=users)
 
+
 @user.route('/admin/user/create', methods=["GET", "POST"])
 @admin_permission.require(http_exception=403)
 def user_create():
@@ -57,6 +58,7 @@ def user_create():
 
     navbar = create_navbar_fd(navbar_conf, 'key.user.user_list')
     return render_template('user/create.html', lw_navbar=navbar, form=form)
+
 
 @user.route('/admin/user/<int:id>/edit', methods=["GET", "POST"])
 @admin_permission.require(http_exception=403)
@@ -92,3 +94,9 @@ def user_edit(id):
 
     navbar = create_navbar_fd(navbar_conf, 'key.user.user_list')
     return render_template('user/edit.html', lw_navbar=navbar, form=form, user=user)
+
+
+@user.route('/admin/user/<int:id>/delete', methods=["POST"])
+@admin_permission.require(http_exception=403)
+def user_del(id):
+    pass

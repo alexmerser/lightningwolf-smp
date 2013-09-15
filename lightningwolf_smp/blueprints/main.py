@@ -2,7 +2,7 @@
 # coding=utf8
 from flask import Blueprint, render_template
 from flask.ext.login import login_required
-from flask.ext.lwadmin import create_navbar_fd
+from flask.ext.lwadmin.navbar import create_navbar_fd
 from lightningwolf_smp.application import app_permissions, navbar_conf
 
 

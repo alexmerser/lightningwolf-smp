@@ -6,7 +6,8 @@ import os
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.jqueryuibootstrap import Bootstrap
-from flask.ext.lwadmin import LwAdmin, Navbar
+from flask.ext.lwadmin import LwAdmin
+from flask.ext.lwadmin.navbar import Navbar
 from flask.ext.login import LoginManager, current_user
 from flask.ext.principal import (
     Principal, 
