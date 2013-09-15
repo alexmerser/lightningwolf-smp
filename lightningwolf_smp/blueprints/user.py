@@ -7,7 +7,8 @@ from flask import (
     redirect,
     request,
     url_for,
-    abort
+    abort,
+    session
 )
 
 from flask.ext.lwadmin.navbar import create_navbar_fd
@@ -32,15 +33,16 @@ def user_page():
 @admin_permission.require(http_exception=403)
 def user_list():
     from flask_wtf import Form
-    from lightningwolf_smp.utils.user import get_user_list
+    from lightningwolf_smp.utils.user import get_user_list, get_user_filters
     from lightningwolf_smp.forms.user import FormUsernameFilter, FormUserBatchActions
-    users = get_user_list()
+    filter_data = get_user_filters()
+    users = get_user_list(filter_data)
     navbar = create_navbar_fd(navbar_conf, 'key.user.user_list')
     return render_template(
         'user/list.html',
         lw_navbar=navbar,
         list=users,
-        filter=FormUsernameFilter(),
+        filter=FormUsernameFilter(**filter_data),
         batch_actions=FormUserBatchActions(),
         delete_action=Form()
     )
@@ -49,12 +51,31 @@ def user_list():
 @user.route('/admin/user/filter', methods=["POST"])
 @admin_permission.require(http_exception=403)
 def user_filter():
+    from lightningwolf_smp.utils.user import set_user_filters
+
+    action = request.args.get('action', '')
+    if action == '_reset':
+        from flask_wtf import Form
+        form = Form()
+    else:
+        from lightningwolf_smp.forms.user import FormUsernameFilter
+        form = FormUsernameFilter()
+
+    if form.validate_on_submit():
+        if action == '_reset':
+            set_user_filters({'username': None})
+        else:
+            set_user_filters({'username': form.data['username']})
+    else:
+        flash(u'An error occurred in filter form', 'error')
+
     return redirect(url_for('user.user_list'))
 
 
 @user.route('/admin/user/batch', methods=["POST"])
 @admin_permission.require(http_exception=403)
 def user_batch():
+    flash(u'Work in progress', 'error')
     return redirect(url_for('user.user_list'))
 
 
