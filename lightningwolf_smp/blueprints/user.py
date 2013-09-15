@@ -33,15 +33,23 @@ def user_page():
 @admin_permission.require(http_exception=403)
 def user_list():
     from flask_wtf import Form
-    from lightningwolf_smp.utils.user import get_user_list, get_user_filters
+    from flask_lwadmin.pager import Pager
+    from lightningwolf_smp.utils.user import get_user_list, get_user_list_count, get_user_filters
     from lightningwolf_smp.forms.user import FormUsernameFilter, FormUserBatchActions
     filter_data = get_user_filters()
-    users = get_user_list(filter_data)
+    count = get_user_list_count(filter_data)
+    page = request.args.get('page', 1)
+    pager = Pager()
+    pager.set_page(page)
+    pager.initialize(count)
+    users = get_user_list(filter_data, offset=pager.get_offset(), limit=pager.get_limit())
     navbar = create_navbar_fd(navbar_conf, 'key.user.user_list')
     return render_template(
         'user/list.html',
         lw_navbar=navbar,
         list=users,
+        page=page,
+        pager=pager,
         filter=FormUsernameFilter(**filter_data),
         batch_actions=FormUserBatchActions(),
         delete_action=Form()

@@ -19,12 +19,20 @@ user_permissions = {
 }
 
 
-def get_user_list(filter_data):
-    query = db.session.query(User)
+def get_user_list(filter_data, offset=0, limit=100):
+    query = db.session.query(User).offset(offset).limit(limit)
     if 'username' in filter_data:
         if filter_data['username'] is not None:
             query = query.filter(User.username.like('%' + filter_data['username'] + '%'))
     return query
+
+
+def get_user_list_count(filter_data):
+    query = db.session.query(User)
+    if 'username' in filter_data:
+        if filter_data['username'] is not None:
+            query = query.filter(User.username.like('%' + filter_data['username'] + '%'))
+    return query.count()
 
 
 def get_user(id):

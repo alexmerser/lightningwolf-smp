@@ -1,6 +1,7 @@
 {% extends 'jqueryuibootstrap_layout.html' %}
 {% import 'macros/messages.html' as messages_macros with context -%}
 {% import 'macros/filters.html' as filters_macros %}
+{% import 'macros/pager.html' as pager_macros %}
 {% import 'macros/batch_actions.html' as batch_actions_macros %}
 {% import 'macros/actions.html' as actions_macros %}
 
@@ -36,7 +37,7 @@
             </thead>
             <tfoot>
                 <tr>
-                    <th colspan="{% if batch_actions %}5{% else %}4{%  endif %}">result: 1</th>
+                    <th colspan="{% if batch_actions %}5{% else %}4{%  endif %}">{{ pager_macros.footer(pager) }}</th>
                 </tr>
             </tfoot>
             <tbody>
@@ -58,6 +59,7 @@
             {% endfor %}
             </tbody>
         </table>
+        {% if pager.have_to_paginate %}{{ pager_macros.pager(pager=pager, page=page, url=url_for('user.user_list')) }}{% endif %}
         {% if batch_actions %}{{ batch_actions_macros.batch_script(id='lw_admin_list_batch_checkbox', class='lw_admin_batch_checkbox') }}{%  endif %}
         <div class="btn-toolbar">
             <div class="btn-group">
