@@ -2,6 +2,7 @@
 {% import 'macros/messages.html' as messages_macros with context -%}
 {% import 'macros/filters.html' as filters_macros %}
 {% import 'macros/batch_actions.html' as batch_actions_macros %}
+{% import 'macros/actions.html' as actions_macros %}
 
 {% block container %}
     <h1>Users List {{ current_user }}</h1>
@@ -48,9 +49,9 @@
                     <td>
                         <div class="btn-group pull-right">
                             <a title="Edit" class="btn btn-small" href="{{ url_for('user.user_edit', id=item.id) }}"><i class="icon-edit"></i> Edit</a>
-                            {% if item.username != current_user.get_username() %}
-                            <a title="Delete" class="btn btn-danger btn-small" onclick="if (confirm('Are you sure?')) { var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'post'; f.action = this.href;var m = document.createElement('input'); m.setAttribute('type', 'hidden'); m.setAttribute('name', 'method'); m.setAttribute('value', 'delete'); f.appendChild(m);var m = document.createElement('input'); m.setAttribute('type', 'hidden'); m.setAttribute('name', '_csrf_token'); m.setAttribute('value', 'd7c16989a573630e2f6d02680d2280ae'); f.appendChild(m);f.submit(); };return false;" href="{{ url_for('user.user_del', id=item.id) }}"><i class="icon-trash icon-white"></i> Delete</a>
-                            {% endif %}
+                            {% if delete_action %}{% if item.username != current_user.get_username() %}
+                            {{ actions_macros.delete_action(delete_form=delete_action, url=url_for('user.user_del', id=item.id)) }}
+                            {% endif %}{% endif %}
                         </div>
                     </td>
                 </tr>
