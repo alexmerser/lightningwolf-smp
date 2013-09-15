@@ -88,6 +88,16 @@ class FormUsernameFilter(Form):
     )
 
 
+class FormUserBatchActions(Form):
+    batch_action = fields.SelectField(
+        label='User Roles',
+        choices=[(u'', u'Chose Action'), (u'batchDelete', u'Delete')],
+        validators=[
+            validators.Required(message=u'Required field')
+        ]
+    )
+
+
 class BaseFormUserChangePassword(Form):
     password = fields.PasswordField(
         label='Password',
