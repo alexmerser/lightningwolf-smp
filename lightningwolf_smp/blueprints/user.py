@@ -99,4 +99,9 @@ def user_edit(id):
 @user.route('/admin/user/<int:id>/delete', methods=["POST"])
 @admin_permission.require(http_exception=403)
 def user_del(id):
-    pass
+    from lightningwolf_smp.utils.user import get_user
+    user = get_user(id)
+    if user is None:
+        abort(404)
+    user.delete()
+    return redirect(url_for('user.user_list'))

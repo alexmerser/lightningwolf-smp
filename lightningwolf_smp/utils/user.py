@@ -54,8 +54,7 @@ def create_user(username, email, password, credential='user', cli=False):
     )
 
     try:
-        db.session.add(user)
-        db.session.commit()
+        user.save()
         return True
     except exc.SQLAlchemyError:
         db.session.rollback()
@@ -77,7 +76,7 @@ def edit_user(user, email, password, credential='user', cli=False):
     user.email = email
 
     try:
-        db.session.commit()
+        user.save()
         return True
     except exc.SQLAlchemyError:
         db.session.rollback()
