@@ -43,16 +43,35 @@ def user_list():
     pager.set_page(page)
     pager.initialize(count)
     users = get_user_list(filter_data, offset=pager.get_offset(), limit=pager.get_limit())
+
+    configuration = {
+        'list': {
+            'display': [
+                {'name': 'id', 'label': 'Id'},
+                {'name': 'username', 'label': 'Username'},
+                {'name': 'email', 'label': 'E-mail'}
+            ],
+            'batch_actions': [
+                {'name': 'delete'}
+            ],
+            'object_actions': [
+                {'name': 'edit'},
+                {'name': 'delete'}
+            ]
+        }
+    }
+
     navbar = create_navbar_fd(navbar_conf, 'key.user.user_list')
     return render_template(
         'user/list.html',
         lw_navbar=navbar,
-        list=users,
+        results=users,
         page=page,
         pager=pager,
         filter=FormUsernameFilter(**filter_data),
         batch_actions=FormUserBatchActions(),
-        delete_action=Form()
+        delete_action=Form(),
+        configuration=configuration
     )
 
 
