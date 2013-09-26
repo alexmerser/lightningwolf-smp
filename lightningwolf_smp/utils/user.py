@@ -6,6 +6,7 @@ import json
 import bcrypt
 
 from flask import session
+from flask_lwadmin.pager import Pager
 from lightningwolf_smp.application import db
 from lightningwolf_smp.models import User
 from sqlalchemy import exc
@@ -136,3 +137,7 @@ def is_unique_email(email, id=None):
             return True
 
     return False
+
+
+class UserPager(Pager):
+    pass

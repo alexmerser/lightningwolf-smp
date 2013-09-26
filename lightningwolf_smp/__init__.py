@@ -2,6 +2,7 @@
 # coding=utf8
 version = '0.0.1'
 
+
 class Config(object):
     VERSION = version
     DEBUG = False
@@ -9,8 +10,10 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = 'sqlite://'
     SENTRY_DSN = ''
 
+
 class DevelopmentConfig(Config):
     DEBUG = True
+
 
 class TestingConfig(Config):
     TESTING = True

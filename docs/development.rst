@@ -101,4 +101,10 @@ Create Mysql Databese with user
 
     $ export LIGHTNINGWOLF_SETTINGS=<path to config.py file>
 
+Or for example start application with ``--config`` option
+
+::
+
+    $ smp --config=<path to config.py file> start
+
 **TODO**
