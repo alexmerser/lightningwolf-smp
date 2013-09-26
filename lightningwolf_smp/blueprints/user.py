@@ -33,7 +33,7 @@ def user_page():
 @admin_permission.require(http_exception=403)
 def user_list():
     from flask_wtf import Form
-    from lightningwolf_smp.utils.user import get_user_list, get_user_list_count, get_user_filters, UserPager
+    from lightningwolf_smp.utils.user import UserPager
     from lightningwolf_smp.forms.user import FormUsernameFilter, FormUserBatchActions
     from lightningwolf_smp.blueprints.configs.user import list_configuration
     page = request.args.get('page', 1)
