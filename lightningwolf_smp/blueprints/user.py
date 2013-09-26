@@ -36,15 +36,10 @@ def user_list():
     from lightningwolf_smp.utils.user import get_user_list, get_user_list_count, get_user_filters, UserPager
     from lightningwolf_smp.forms.user import FormUsernameFilter, FormUserBatchActions
     from lightningwolf_smp.blueprints.configs.user import list_configuration
-    filter_data = get_user_filters()
-    count = get_user_list_count(filter_data)
     page = request.args.get('page', 1)
-    pager = UserPager()
-    pager.set_page(page)
-    pager.set_count(count)
+    pager = UserPager(page=page)
     pager.initialize()
-    users = get_user_list(filter_data, offset=pager.get_offset(), limit=pager.get_limit())
-    pager.set_results(users)
+    filter_data = pager.get_filter()
 
     navbar = create_navbar_fd(navbar_conf, 'key.user.user_list')
     return render_template(

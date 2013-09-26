@@ -140,4 +140,20 @@ def is_unique_email(email, id=None):
 
 
 class UserPager(Pager):
-    pass
+    def __init__(self, max_per_page=10, page=1):
+        Pager.__init__(self, max_per_page=max_per_page, page=page)
+        self.filter_data = {}
+
+    def initialize(self):
+        self.filter_data = get_user_filters()
+        self.set_count(get_user_list_count(self.filter_data))
+        Pager.initialize(self)
+
+    def get_results(self):
+        if self.results is None:
+            self.results = get_user_list(self.filter_data, offset=self.get_offset(), limit=self.get_limit())
+
+        return self.results
+
+    def get_filter(self):
+        return self.filter_data
