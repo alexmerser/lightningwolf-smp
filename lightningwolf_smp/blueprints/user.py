@@ -38,7 +38,7 @@ def user_list():
     from lightningwolf_smp.blueprints.configs.user import list_configuration
     page = request.args.get('page', 1)
     pager = UserPager(page=page)
-    pager.initialize()
+    pager.initialize(configuration=list_configuration)
     filter_data = pager.get_filter()
 
     navbar = create_navbar_fd(navbar_conf, 'key.user.user_list')

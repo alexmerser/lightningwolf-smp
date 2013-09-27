@@ -144,10 +144,10 @@ class UserPager(Pager):
         Pager.__init__(self, max_per_page=max_per_page, page=page)
         self.filter_data = {}
 
-    def initialize(self):
+    def initialize(self, configuration):
         self.filter_data = get_user_filters()
         self.set_count(get_user_list_count(self.filter_data))
-        Pager.initialize(self)
+        Pager.initialize(self, configuration)
 
     def get_results(self):
         if self.results is None:
