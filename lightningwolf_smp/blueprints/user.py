@@ -35,10 +35,10 @@ def user_list():
     from flask_wtf import Form
     from lightningwolf_smp.utils.user import UserPager
     from lightningwolf_smp.forms.user import FormUsernameFilter, FormUserBatchActions
-    from lightningwolf_smp.blueprints.configs.user import list_configuration
+    from lightningwolf_smp.blueprints.configs.user import configuration
     page = request.args.get('page', 1)
     pager = UserPager(page=page)
-    pager.initialize(configuration=list_configuration)
+    pager.initialize(configuration=configuration)
     filter_data = pager.get_filter()
 
     navbar = create_navbar_fd(navbar_conf, 'key.user.user_list')
@@ -50,7 +50,7 @@ def user_list():
         filter=FormUsernameFilter(**filter_data),
         batch_actions=FormUserBatchActions(),
         delete_action=Form(),
-        configuration=list_configuration
+        configuration=configuration
     )
 
 
