@@ -10,7 +10,7 @@ configuration = {
             {'name': 'email', 'label': 'E-mail'}
         ],
         'actions': [
-            {'name': 'new'}
+            {'name': 'new', 'label': 'New'}
         ],
         'batch_actions': [
             {'name': 'delete'}
