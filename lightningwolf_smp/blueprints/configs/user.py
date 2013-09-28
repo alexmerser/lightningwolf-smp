@@ -46,6 +46,7 @@ configuration = {
         },
         'filter': {
             'url': 'user.user_filter',
+            'type': ConfigParser.URL_INTERNAL,
             'form': FormUsernameFilter(**filter_data)
         }
     }
