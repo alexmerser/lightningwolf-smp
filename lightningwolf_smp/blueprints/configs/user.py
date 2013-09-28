@@ -9,6 +9,7 @@ filter_data = get_user_filters()
 
 configuration = {
     'list': {
+        'pk': {'key': 'id'},
         'display': [
             {'key': 'id', 'label': 'Id'},
             {'key': 'username', 'label': 'Username'},
@@ -25,11 +26,15 @@ configuration = {
         'object_actions': [
             {
                 'key': 'edit',
-                'label': 'Edit'
+                'label': 'Edit',
+                'url': 'user.user_edit',
+                'type': ConfigParser.URL_PK
             },
             {
                 'key': 'delete',
-                'label': 'Delete'
+                'label': 'Delete',
+                'url': 'user.user_del',
+                'type': ConfigParser.URL_PK
             }
         ],
         'batch': {
