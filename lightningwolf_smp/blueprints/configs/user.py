@@ -20,11 +20,20 @@ configuration = {
             }
         ],
         'batch_actions': [
-            {'key': 'delete'}
+            {
+                'key': 'delete',
+                'label': 'Delete'
+            }
         ],
         'object_actions': [
-            {'key': 'edit'},
-            {'key': 'delete'}
+            {
+                'key': 'edit',
+                'label': 'Edit'
+            },
+            {
+                'key': 'delete',
+                'label': 'Delete'
+            }
         ]
     }
 }

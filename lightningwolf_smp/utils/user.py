@@ -145,6 +145,7 @@ class UserPager(Pager):
         self.filter_data = {}
 
     def initialize(self, configuration):
+        # TODO: filter_data in this moment is get in blueprint for configuration too!
         self.filter_data = get_user_filters()
         self.set_count(get_user_list_count(self.filter_data))
         Pager.initialize(self, configuration)

@@ -32,14 +32,21 @@ def user_page():
 @user.route('/admin/user/list', methods=["GET"])
 @admin_permission.require(http_exception=403)
 def user_list():
-    from flask_wtf import Form
-    from lightningwolf_smp.utils.user import UserPager
+    from lightningwolf_smp.utils.user import UserPager, get_user_filters
     from lightningwolf_smp.forms.user import FormUsernameFilter, FormUserBatchActions
     from lightningwolf_smp.blueprints.configs.user import configuration
+    filter_data = get_user_filters()
+    configuration['batch_form'] = {
+        'url': 'user.user_batch',
+        'form': FormUserBatchActions()
+    }
+    configuration['filter_form'] = {
+        'url': 'user.user_filter',
+        'form': FormUsernameFilter(**filter_data)
+    }
     page = request.args.get('page', 1)
     pager = UserPager(page=page)
     pager.initialize(configuration=configuration)
-    filter_data = pager.get_filter()
 
     navbar = create_navbar_fd(navbar_conf, 'key.user.user_list')
     return render_template(
@@ -47,9 +54,6 @@ def user_list():
         lw_navbar=navbar,
         page=page,
         pager=pager,
-        filter=FormUsernameFilter(**filter_data),
-        batch_actions=FormUserBatchActions(),
-        delete_action=Form(),
         configuration=configuration
     )
 
