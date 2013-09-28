@@ -2,7 +2,10 @@
 # coding=utf8
 __author__ = 'ldath'
 from flask_lwadmin.config import ConfigParser
+from lightningwolf_smp.utils.user import get_user_filters
+from lightningwolf_smp.forms.user import FormUsernameFilter, FormUserBatchActions
 
+filter_data = get_user_filters()
 
 configuration = {
     'list': {
@@ -19,12 +22,6 @@ configuration = {
                 'type': ConfigParser.URL_INTERNAL
             }
         ],
-        'batch_actions': [
-            {
-                'key': 'delete',
-                'label': 'Delete'
-            }
-        ],
         'object_actions': [
             {
                 'key': 'edit',
@@ -34,6 +31,22 @@ configuration = {
                 'key': 'delete',
                 'label': 'Delete'
             }
-        ]
+        ],
+        'batch': {
+            'form': {
+                'url': 'user.user_batch',
+                'form': FormUserBatchActions()
+            },
+            'actions': [
+                {
+                    'key': 'delete',
+                    'label': 'Delete'
+                }
+            ],
+        },
+        'filter': {
+            'url': 'user.user_filter',
+            'form': FormUsernameFilter(**filter_data)
+        }
     }
 }

@@ -7,8 +7,7 @@ from flask import (
     redirect,
     request,
     url_for,
-    abort,
-    session
+    abort
 )
 
 from flask.ext.lwadmin.navbar import create_navbar_fd
@@ -32,18 +31,8 @@ def user_page():
 @user.route('/admin/user/list', methods=["GET"])
 @admin_permission.require(http_exception=403)
 def user_list():
-    from lightningwolf_smp.utils.user import UserPager, get_user_filters
-    from lightningwolf_smp.forms.user import FormUsernameFilter, FormUserBatchActions
+    from lightningwolf_smp.utils.user import UserPager
     from lightningwolf_smp.blueprints.configs.user import configuration
-    filter_data = get_user_filters()
-    configuration['batch_form'] = {
-        'url': 'user.user_batch',
-        'form': FormUserBatchActions()
-    }
-    configuration['filter_form'] = {
-        'url': 'user.user_filter',
-        'form': FormUsernameFilter(**filter_data)
-    }
     page = request.args.get('page', 1)
     pager = UserPager(page=page)
     pager.initialize(configuration=configuration)
