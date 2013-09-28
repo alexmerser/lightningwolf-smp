@@ -21,11 +21,11 @@ user_permissions = {
 
 
 def get_user_list(filter_data, offset=0, limit=100):
-    query = db.session.query(User).offset(offset).limit(limit)
+    query = db.session.query(User)
     if 'username' in filter_data:
         if filter_data['username'] is not None:
             query = query.filter(User.username.like('%' + filter_data['username'] + '%'))
-    return query
+    return query.offset(offset).limit(limit)
 
 
 def get_user_list_count(filter_data):
@@ -155,6 +155,3 @@ class UserPager(Pager):
             self.results = get_user_list(self.filter_data, offset=self.get_offset(), limit=self.get_limit())
 
         return self.results
-
-    def get_filter(self):
-        return self.filter_data

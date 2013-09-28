@@ -33,16 +33,9 @@ configuration = {
             }
         ],
         'batch': {
-            'form': {
-                'url': 'user.user_batch',
-                'form': FormUserBatchActions()
-            },
-            'actions': [
-                {
-                    'key': 'delete',
-                    'label': 'Delete'
-                }
-            ],
+            'url': 'user.user_batch',
+            'type': ConfigParser.URL_INTERNAL,
+            'form': FormUserBatchActions()
         },
         'filter': {
             'url': 'user.user_filter',
