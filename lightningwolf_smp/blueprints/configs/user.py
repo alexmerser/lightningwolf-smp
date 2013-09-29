@@ -28,13 +28,15 @@ configuration = {
                 'key': 'edit',
                 'label': 'Edit',
                 'url': 'user.user_edit',
-                'type': ConfigParser.URL_PK
+                'type': ConfigParser.URL_PK,
+                'icon': 'icon-edit'
             },
             {
                 'key': 'delete',
                 'label': 'Delete',
                 'url': 'user.user_del',
-                'type': ConfigParser.URL_PK
+                'type': ConfigParser.URL_PK,
+                'icon': 'icon-trash icon-white'
             }
         ],
         'batch': {
