@@ -20,7 +20,8 @@ configuration = {
                 'key': 'new',
                 'label': 'New',
                 'url': 'user.user_create',
-                'type': ConfigParser.URL_INTERNAL
+                'type': ConfigParser.URL_INTERNAL,
+                'class': 'btn btn-primary'
             }
         ],
         'object_actions': [
@@ -36,7 +37,10 @@ configuration = {
                 'label': 'Delete',
                 'url': 'user.user_del',
                 'type': ConfigParser.URL_PK,
-                'icon': 'icon-trash icon-white'
+                'icon': 'icon-trash icon-white',
+                'confirm': True,
+                'confirm_message': 'Are you sure?',
+                'class': 'btn btn-small btn-danger'
             }
         ],
         'batch': {
