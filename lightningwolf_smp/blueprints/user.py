@@ -98,7 +98,28 @@ def user_create():
             flash(u'An error occurred while creating the user', 'error')
 
     navbar = create_navbar_fd(navbar_conf, 'key.user.user_list')
-    return render_template('user/create.html', lw_navbar=navbar, form=form)
+    return render_template(
+        'user/create.html',
+        lw_navbar=navbar,
+        configuration={
+            'title': 'Create Users',
+            'form': form,
+            'url': url_for('user.user_create'),
+            'display_blocks': [
+                {
+                    'legend': None,
+                    'display': ['username', 'password', 'repassword', 'email', 'perm']
+                }
+            ],
+            'actions': [
+                {
+                    'key': 'back',
+                    'label': 'Back to list',
+                    'url': url_for('user.user_list')
+                }
+            ]
+        }
+    )
 
 
 @user.route('/admin/user/<int:id>/edit', methods=["GET", "POST"])
@@ -134,7 +155,32 @@ def user_edit(id):
                 flash(u'An error occurred while updating the user', 'error')
 
     navbar = create_navbar_fd(navbar_conf, 'key.user.user_list')
-    return render_template('user/edit.html', lw_navbar=navbar, form=form, user=user)
+    return render_template(
+        'user/update.html',
+        lw_navbar=navbar,
+        configuration={
+            'title': 'Edit User: {0}'.format(user.get_username()),
+            'form': form,
+            'url': url_for('user.user_edit', id=user.get_id()),
+            'display_blocks': [
+                {
+                    'legend': None,
+                    'display': ['email', 'perm']
+                },
+                {
+                    'legend': 'Optional password change',
+                    'display': ['password', 'repassword']
+                }
+            ],
+            'actions': [
+                {
+                    'key': 'back',
+                    'label': 'Back to list',
+                    'url': url_for('user.user_list')
+                }
+            ]
+        }
+    )
 
 
 @user.route('/admin/user/<int:id>/delete', methods=["POST"])

@@ -3,7 +3,10 @@
 __author__ = 'ldath'
 from flask_lwadmin.config import ConfigParser
 from lightningwolf_smp.utils.user import get_user_filters
-from lightningwolf_smp.forms.user import FormUsernameFilter, FormUserBatchActions
+from lightningwolf_smp.forms.user import (
+    FormUsernameFilter,
+    FormUserBatchActions
+)
 
 filter_data = get_user_filters()
 
