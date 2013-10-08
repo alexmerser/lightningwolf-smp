@@ -19,13 +19,16 @@ class User(db.Model):
     permissions = db.Column(db.Text, nullable=False)
 
     # Flask-Login integration
-    def is_authenticated(self):
+    @staticmethod
+    def is_authenticated():
         return True
 
-    def is_active(self):
+    @staticmethod
+    def is_active():
         return True
 
-    def is_anonymous(self):
+    @staticmethod
+    def is_anonymous():
         return False
 
     def get_id(self):
