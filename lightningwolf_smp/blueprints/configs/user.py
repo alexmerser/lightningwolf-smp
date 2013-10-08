@@ -43,7 +43,8 @@ configuration = {
                 'icon': 'icon-trash icon-white',
                 'confirm': True,
                 'confirm_message': 'Are you sure?',
-                'class': 'btn btn-small btn-danger'
+                'class': 'btn btn-small btn-danger',
+                'call': 'check_del_button'
             }
         ],
         'batch': {

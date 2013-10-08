@@ -6,6 +6,7 @@ import hashlib
 
 
 from lightningwolf_smp.application import db
+from flask.ext.login import current_user
 
 
 class User(db.Model):
@@ -66,3 +67,13 @@ class User(db.Model):
     # Flask-LwAdmin integration
     def __unicode__(self):
         return self.username
+
+    def check_del_button(self, pre):
+        """
+        Check for del button in Pager. If current_user is the same as user then Del button is not visable
+        :param pre: Flask-LwAdmin action dictionary
+        :return: Flask-LwAdmin action dictionary
+        """
+        if current_user.username == self.username:
+            pre['visable'] = False
+        return pre
