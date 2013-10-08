@@ -122,34 +122,34 @@ def user_create():
     )
 
 
-@user.route('/admin/user/<int:id>/edit', methods=["GET", "POST"])
+@user.route('/admin/user/<int:user_id>/edit', methods=["GET", "POST"])
 @admin_permission.require(http_exception=403)
-def user_edit(id):
+def user_edit(user_id):
     from lightningwolf_smp.forms.user import FormUserEdit
     from lightningwolf_smp.utils.user import get_user
-    user = get_user(id)
-    if user is None:
+    user_object = get_user(user_id)
+    if user_object is None:
         abort(404)
 
     if request.method == 'GET':
         form = FormUserEdit(
-            email=user.email,
-            perm=user.get_perm()
+            email=user_object.email,
+            perm=user_object.get_perm()
         )
 
     if request.method == 'POST':
         form = FormUserEdit()
-        form.setId(user.get_id())
+        form.setId(user_object.get_id())
         if form.validate_on_submit():
             from lightningwolf_smp.utils.user import edit_user
             rs = edit_user(
-                user=user,
+                user=user_object,
                 email=form.data['email'],
                 password=form.data['password'],
                 credential=form.data['perm']
             )
             if rs is True:
-                flash(u'User `%s` data changed' % user.get_username(), 'success')
+                flash(u'User `%s` data changed' % user_object.get_username(), 'success')
                 return redirect(url_for('user.user_list'))
             else:
                 flash(u'An error occurred while updating the user', 'error')
@@ -159,9 +159,9 @@ def user_edit(id):
         'user/update.html',
         lw_navbar=navbar,
         configuration={
-            'title': 'Edit User: {0}'.format(user.get_username()),
+            'title': 'Edit User: {0}'.format(user_object.get_username()),
             'form': form,
-            'url': url_for('user.user_edit', id=user.get_id()),
+            'url': url_for('user.user_edit', user_id=user_object.get_id()),
             'display_blocks': [
                 {
                     'legend': None,
@@ -183,17 +183,17 @@ def user_edit(id):
     )
 
 
-@user.route('/admin/user/<int:id>/delete', methods=["POST"])
+@user.route('/admin/user/<int:user_id>/delete', methods=["POST"])
 @admin_permission.require(http_exception=403)
-def user_del(id):
+def user_del(user_id):
     from flask_wtf import Form
     from lightningwolf_smp.utils.user import get_user
-    user = get_user(id)
-    if user is None:
+    user_object = get_user(user_id)
+    if user_object is None:
         abort(404)
     form = Form()
     if form.validate_on_submit():
-        user.delete()
+        user_object.delete()
     else:
         flash(u'An error occurred while deleting the user', 'error')
 

@@ -6,6 +6,7 @@ import hashlib
 
 
 from lightningwolf_smp.application import db
+from flask import url_for
 from flask.ext.login import current_user
 
 
@@ -68,12 +69,17 @@ class User(db.Model):
     def __unicode__(self):
         return self.username
 
-    def check_del_button(self, pre):
+    def set_edit_button(self, pre):
+        pre['url'] = url_for(pre['url'], user_id=self.id)
+        return pre
+
+    def set_del_button(self, pre):
         """
         Check for del button in Pager. If current_user is the same as user then Del button is not visable
         :param pre: Flask-LwAdmin action dictionary
         :return: Flask-LwAdmin action dictionary
         """
+        pre['url'] = url_for(pre['url'], user_id=self.id)
         if current_user.username == self.username:
             pre['visable'] = False
         return pre

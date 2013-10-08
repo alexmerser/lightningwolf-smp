@@ -12,7 +12,6 @@ filter_data = get_user_filters()
 
 configuration = {
     'list': {
-        'pk': {'key': 'id'},
         'display': [
             {'key': 'id', 'label': 'Id'},
             {'key': 'username', 'label': 'Username'},
@@ -33,7 +32,8 @@ configuration = {
                 'label': 'Edit',
                 'url': 'user.user_edit',
                 'type': ConfigParser.URL_PK,
-                'icon': 'icon-edit'
+                'icon': 'icon-edit',
+                'call': 'set_edit_button'
             },
             {
                 'key': 'delete',
@@ -44,7 +44,7 @@ configuration = {
                 'confirm': True,
                 'confirm_message': 'Are you sure?',
                 'class': 'btn btn-small btn-danger',
-                'call': 'check_del_button'
+                'call': 'set_del_button'
             }
         ],
         'batch': {
