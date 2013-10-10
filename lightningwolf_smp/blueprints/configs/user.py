@@ -2,7 +2,7 @@
 # coding=utf8
 __author__ = 'ldath'
 from flask_lwadmin.config import ConfigParser
-from lightningwolf_smp.utils.user import get_user_filters
+from lightningwolf_smp.models.user import get_user_filters
 from lightningwolf_smp.forms.user import (
     FormUsernameFilter,
     FormUserBatchActions

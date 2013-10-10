@@ -31,7 +31,7 @@ def user_page():
 @user.route('/admin/user/list', methods=["GET"])
 @admin_permission.require(http_exception=403)
 def user_list():
-    from lightningwolf_smp.utils.user import UserPager
+    from lightningwolf_smp.models.user import UserPager
     from lightningwolf_smp.blueprints.configs.user import configuration
     page = request.args.get('page', 1)
     pager = UserPager(page=page)
@@ -50,7 +50,7 @@ def user_list():
 @user.route('/admin/user/filter', methods=["POST"])
 @admin_permission.require(http_exception=403)
 def user_filter():
-    from lightningwolf_smp.utils.user import set_user_filters
+    from lightningwolf_smp.models.user import set_user_filters
 
     action = request.args.get('action', '')
     if action == '_reset':
@@ -84,7 +84,7 @@ def user_create():
     from lightningwolf_smp.forms.user import FormUserAdd
     form = FormUserAdd()
     if form.validate_on_submit():
-        from lightningwolf_smp.utils.user import create_user
+        from lightningwolf_smp.models.user import create_user
         rs = create_user(
             username=form.data['username'],
             email=form.data['email'],
@@ -126,7 +126,7 @@ def user_create():
 @admin_permission.require(http_exception=403)
 def user_edit(user_id):
     from lightningwolf_smp.forms.user import FormUserEdit
-    from lightningwolf_smp.utils.user import get_user
+    from lightningwolf_smp.models.user import get_user
     user_object = get_user(user_id)
     if user_object is None:
         abort(404)
@@ -141,7 +141,7 @@ def user_edit(user_id):
         form = FormUserEdit()
         form.setId(user_object.get_id())
         if form.validate_on_submit():
-            from lightningwolf_smp.utils.user import edit_user
+            from lightningwolf_smp.models.user import edit_user
             rs = edit_user(
                 user=user_object,
                 email=form.data['email'],
@@ -187,7 +187,7 @@ def user_edit(user_id):
 @admin_permission.require(http_exception=403)
 def user_del(user_id):
     from flask_wtf import Form
-    from lightningwolf_smp.utils.user import get_user
+    from lightningwolf_smp.models.user import get_user
     user_object = get_user(user_id)
     if user_object is None:
         abort(404)

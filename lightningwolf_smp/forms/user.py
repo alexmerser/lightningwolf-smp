@@ -6,7 +6,7 @@ from wtforms import (
     validators
 )
 
-from lightningwolf_smp.utils.user import is_unique_email, is_unique_user
+from lightningwolf_smp.models.user import is_unique_email, is_unique_user
 
 
 class FormUserAdd(Form):
@@ -131,7 +131,7 @@ class FormUserChangeEmail(Form):
     )
 
     def validate_email(self, field):
-        if not is_unique_email(field.data, id=self.id):
+        if not is_unique_email(field.data, user_id=self.id):
             raise validators.ValidationError('This e-mail: %s is not unique in system.' % field.data)
 
 
