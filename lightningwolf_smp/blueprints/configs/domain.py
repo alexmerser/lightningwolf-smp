@@ -23,16 +23,12 @@ configuration = {
             {
                 'key': 'edit',
                 'label': 'Edit',
-                'url': 'domain.domain_edit',
-                'type': ConfigParser.URL_PK,
                 'icon': 'icon-edit',
                 'call': 'set_edit_button'
             },
             {
                 'key': 'delete',
                 'label': 'Delete',
-                'url': 'domain.domain_del',
-                'type': ConfigParser.URL_PK,
                 'icon': 'icon-trash icon-white',
                 'confirm': True,
                 'confirm_message': 'Are you sure?',

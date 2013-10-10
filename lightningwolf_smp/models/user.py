@@ -82,7 +82,7 @@ class User(db.Model):
         return self.username
 
     def set_edit_button(self, pre):
-        pre['url'] = url_for(pre['url'], user_id=self.id)
+        pre['url'] = url_for('user.user_edit', user_id=self.id)
         return pre
 
     def set_del_button(self, pre):
@@ -91,7 +91,7 @@ class User(db.Model):
         :param pre: Flask-LwAdmin action dictionary
         :return: Flask-LwAdmin action dictionary
         """
-        pre['url'] = url_for(pre['url'], user_id=self.id)
+        pre['url'] = url_for('user.user_del', user_id=self.id)
         if current_user.username == self.username:
             pre['visable'] = False
         return pre
