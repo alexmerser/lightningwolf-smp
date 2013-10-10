@@ -106,6 +106,13 @@ navbar_conf = {
             'credential': 'admin'
         },
         {
+            'key': 'key.domain.domain_list',
+            'label': 'Domain',
+            'url': 'domain.domain_list',
+            'type': Navbar.URL_INTERNAL,
+            'credential': 'admin'
+        },
+        {
             'key': 'key.main.admin_page',
             'label': 'Admin',
             'url': 'main.admin_page',

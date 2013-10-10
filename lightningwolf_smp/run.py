@@ -11,15 +11,17 @@ from flask import (
 )
 
 from lightningwolf_smp.application import app
-from lightningwolf_smp.blueprints import main
-from lightningwolf_smp.blueprints import login
-from lightningwolf_smp.blueprints import user
+from lightningwolf_smp.blueprints.main import main
+from lightningwolf_smp.blueprints.login import login
+from lightningwolf_smp.blueprints.user import user
+from lightningwolf_smp.blueprints.domain import domain
 
 
 """Blueprints"""
 app.register_blueprint(main)
 app.register_blueprint(login)
 app.register_blueprint(user)
+app.register_blueprint(domain)
 
 
 @app.errorhandler(401)
