@@ -97,35 +97,8 @@ class User(db.Model):
         return pre
 
 
-def get_user_list(filter_data, offset=0, limit=100):
-    query = db.session.query(User)
-    if 'username' in filter_data:
-        if filter_data['username'] is not None:
-            query = query.filter(User.username.like('%' + filter_data['username'] + '%'))
-    return query.offset(offset).limit(limit)
-
-
-def get_user_list_count(filter_data):
-    query = db.session.query(User)
-    if 'username' in filter_data:
-        if filter_data['username'] is not None:
-            query = query.filter(User.username.like('%' + filter_data['username'] + '%'))
-    return query.count()
-
-
 def get_user(user_id):
     return db.session.query(User).get(user_id)
-
-
-def get_user_filters():
-    if 'filter.user' in session:
-        return session['filter.user']
-    else:
-        return {"username": None}
-
-
-def set_user_filters(filter_data):
-    session['filter.user'] = filter_data
 
 
 def create_user(username, email, password, credential='user', cli=False):
@@ -239,8 +212,39 @@ class UserPager(Pager):
         self.set_count(get_user_list_count(self.filter_data))
         Pager.initialize(self, configuration)
 
+    @staticmethod
+    def get_pk():
+        return 'id'
+
     def get_results(self):
         if self.results is None:
             self.results = get_user_list(self.filter_data, offset=self.get_offset(), limit=self.get_limit())
 
         return self.results
+
+
+def get_user_list(filter_data, offset=0, limit=100):
+    query = db.session.query(User)
+    if 'username' in filter_data:
+        if filter_data['username'] is not None:
+            query = query.filter(User.username.like('%' + filter_data['username'] + '%'))
+    return query.offset(offset).limit(limit)
+
+
+def get_user_list_count(filter_data):
+    query = db.session.query(User)
+    if 'username' in filter_data:
+        if filter_data['username'] is not None:
+            query = query.filter(User.username.like('%' + filter_data['username'] + '%'))
+    return query.count()
+
+
+def get_user_filters():
+    if 'filter.user' in session:
+        return session['filter.user']
+    else:
+        return {"username": None}
+
+
+def set_user_filters(filter_data):
+    session['filter.user'] = filter_data
