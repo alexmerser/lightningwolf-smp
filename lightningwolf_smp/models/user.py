@@ -93,7 +93,9 @@ class User(db.Model):
         """
         pre['url'] = url_for('user.user_del', user_id=self.id)
         if current_user.username == self.username:
-            pre['visable'] = False
+            pre['disabled'] = True
+            pre['label'] = 'It\'s you'
+            pre['icon'] = None
         return pre
 
 
