@@ -214,8 +214,7 @@ class UserPager(Pager):
         self.set_count(get_user_list_count(self.filter_data))
         Pager.initialize(self, configuration)
 
-    @staticmethod
-    def get_pk():
+    def get_pk(self):
         return 'id'
 
     def get_results(self):
