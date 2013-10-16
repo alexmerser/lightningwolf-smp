@@ -64,11 +64,25 @@ configuration = {
                 'display': ['username', 'password', 'repassword', 'email', 'perm']
             }
         ],
+        'submit_actions': [
+            {
+                'key': 'save',
+                'label': 'Save',
+                'class': 'btn btn-primary'
+            },
+            {
+                'key': 'save_and_add',
+                'label': 'Save and Add',
+                'class': 'btn btn-primary'
+            }
+        ],
         'actions': [
             {
                 'key': 'back',
                 'label': 'Back to list',
-                'url': None
+                'url': None,
+                'class': 'btn btn-warning',
+                'icon': 'icon-backward'
             }
         ]
     },
@@ -86,11 +100,25 @@ configuration = {
                 'display': ['password', 'repassword']
             }
         ],
+        'submit_actions': [
+            {
+                'key': 'save',
+                'label': 'Save',
+                'class': 'btn btn-primary'
+            },
+            {
+                'key': 'save_and_add',
+                'label': 'Save and Add',
+                'class': 'btn btn-primary'
+            }
+        ],
         'actions': [
             {
                 'key': 'back',
                 'label': 'Back to list',
-                'url': None
+                'url': None,
+                'class': 'btn btn-warning',
+                'icon': 'icon-backward'
             }
         ]
     }
