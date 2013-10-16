@@ -13,8 +13,8 @@ configuration = {
     'list': {
         'display': [
             {'key': 'id', 'label': 'Id'},
-            {'key': 'username', 'label': 'Username'},
-            {'key': 'email', 'label': 'E-mail'}
+            {'key': 'username', 'label': 'Username', 'icon': 'icon-user'},
+            {'key': 'email', 'label': 'E-mail', 'icon': 'icon-envelope'}
         ],
         'actions': [
             {
