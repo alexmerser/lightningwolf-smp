@@ -103,28 +103,15 @@ def user_create():
         else:
             flash(u'An error occurred while creating the user', 'error')
 
+    from lightningwolf_smp.blueprints.configs.user import configuration
+    configuration['create']['form'] = form
+    configuration['create']['url'] = url_for('user.user_create')
+    configuration['create']['actions'][0]['url'] = url_for('user.user_list')
     navbar = create_navbar_fd(navbar_conf, 'key.user.user_list')
     return render_template(
         'user/create.html',
         lw_navbar=navbar,
-        configuration={
-            'title': 'Create Users',
-            'form': form,
-            'url': url_for('user.user_create'),
-            'display_blocks': [
-                {
-                    'legend': None,
-                    'display': ['username', 'password', 'repassword', 'email', 'perm']
-                }
-            ],
-            'actions': [
-                {
-                    'key': 'back',
-                    'label': 'Back to list',
-                    'url': url_for('user.user_list')
-                }
-            ]
-        }
+        configuration=configuration['create']
     )
 
 
@@ -161,32 +148,16 @@ def user_edit(user_id):
             else:
                 flash(u'An error occurred while updating the user', 'error')
 
+    from lightningwolf_smp.blueprints.configs.user import configuration
+    configuration['update']['title'] = 'Edit User: {0}'.format(user_object.get_username())
+    configuration['update']['form'] = form
+    configuration['update']['url'] = url_for('user.user_edit', user_id=user_object.get_id())
+    configuration['update']['actions'][0]['url'] = url_for('user.user_list')
     navbar = create_navbar_fd(navbar_conf, 'key.user.user_list')
     return render_template(
         'user/update.html',
         lw_navbar=navbar,
-        configuration={
-            'title': 'Edit User: {0}'.format(user_object.get_username()),
-            'form': form,
-            'url': url_for('user.user_edit', user_id=user_object.get_id()),
-            'display_blocks': [
-                {
-                    'legend': None,
-                    'display': ['email', 'perm']
-                },
-                {
-                    'legend': 'Optional password change',
-                    'display': ['password', 'repassword']
-                }
-            ],
-            'actions': [
-                {
-                    'key': 'back',
-                    'label': 'Back to list',
-                    'url': url_for('user.user_list')
-                }
-            ]
-        }
+        configuration=configuration['update']
     )
 
 

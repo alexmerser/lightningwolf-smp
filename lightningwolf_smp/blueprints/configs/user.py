@@ -53,5 +53,45 @@ configuration = {
             'type': ConfigParser.URL_INTERNAL,
             'form': FormUsernameFilter(**filter_data)
         }
+    },
+    'create': {
+        'title': 'Create Users',
+        'form': None,
+        'url': None,
+        'display_blocks': [
+            {
+                'legend': None,
+                'display': ['username', 'password', 'repassword', 'email', 'perm']
+            }
+        ],
+        'actions': [
+            {
+                'key': 'back',
+                'label': 'Back to list',
+                'url': None
+            }
+        ]
+    },
+    'update': {
+        'title': 'Edit User',
+        'form': None,
+        'url': None,
+        'display_blocks': [
+            {
+                'legend': None,
+                'display': ['email', 'perm']
+            },
+            {
+                'legend': 'Optional password change',
+                'display': ['password', 'repassword']
+            }
+        ],
+        'actions': [
+            {
+                'key': 'back',
+                'label': 'Back to list',
+                'url': None
+            }
+        ]
     }
 }
