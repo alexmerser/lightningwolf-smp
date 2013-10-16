@@ -1,0 +1,6 @@
+{% extends 'jqueryuibootstrap_layout.html' %}
+{% import 'macros/create.html' as create_macros with context -%}
+
+{% block container %}
+    {{ create_macros.create(title=configuration['title'], configuration=configuration) }}
+{% endblock %}

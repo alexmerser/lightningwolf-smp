@@ -2,5 +2,5 @@
 {% import 'macros/list.html' as list_macros with context -%}
 
 {% block container %}
-    {{ list_macros.list(title='Users List', configuration=configuration, pager=pager) }}
+    {{ list_macros.list(title=configuration['list']['title'], configuration=configuration, pager=pager) }}
 {% endblock %}

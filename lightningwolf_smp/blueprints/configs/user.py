@@ -11,6 +11,7 @@ filter_data = get_user_filters()
 
 configuration = {
     'list': {
+        'title': 'Users List',
         'display': [
             {'key': 'id', 'label': 'Id'},
             {'key': 'username', 'label': 'Username', 'icon': 'icon-user'},
