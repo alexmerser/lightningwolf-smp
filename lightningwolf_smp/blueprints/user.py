@@ -10,6 +10,7 @@ from flask import (
     abort
 )
 
+from flask.ext.login import login_required
 from flask.ext.lwadmin.navbar import create_navbar_fd
 from lightningwolf_smp.application import app_permissions, navbar_conf
 
@@ -22,6 +23,7 @@ admin_permission = app_permissions['admin']
 
 
 @user.route("/user", methods=["GET"])
+@login_required
 @user_permission.require(http_exception=403)
 def user_page():
     navbar = create_navbar_fd(navbar_conf, 'key.user.user_page')
@@ -29,6 +31,7 @@ def user_page():
 
 
 @user.route('/admin/user/list', methods=["GET"])
+@login_required
 @admin_permission.require(http_exception=403)
 def user_list():
     from lightningwolf_smp.models.user import UserPager
@@ -48,6 +51,7 @@ def user_list():
 
 
 @user.route('/admin/user/filter', methods=["POST"])
+@login_required
 @admin_permission.require(http_exception=403)
 def user_filter():
     from lightningwolf_smp.models.user import set_user_filters
@@ -72,6 +76,7 @@ def user_filter():
 
 
 @user.route('/admin/user/batch', methods=["POST"])
+@login_required
 @admin_permission.require(http_exception=403)
 def user_batch():
     flash(u'Work in progress', 'error')
@@ -79,6 +84,7 @@ def user_batch():
 
 
 @user.route('/admin/user/create', methods=["GET", "POST"])
+@login_required
 @admin_permission.require(http_exception=403)
 def user_create():
     from lightningwolf_smp.forms.user import FormUserAdd
@@ -123,6 +129,7 @@ def user_create():
 
 
 @user.route('/admin/user/<int:user_id>/edit', methods=["GET", "POST"])
+@login_required
 @admin_permission.require(http_exception=403)
 def user_edit(user_id):
     from lightningwolf_smp.forms.user import FormUserEdit
@@ -184,6 +191,7 @@ def user_edit(user_id):
 
 
 @user.route('/admin/user/<int:user_id>/delete', methods=["POST"])
+@login_required
 @admin_permission.require(http_exception=403)
 def user_del(user_id):
     from flask_wtf import Form

@@ -22,6 +22,7 @@ def main_page():
 
 
 @main.route("/admin", methods=["GET"])
+@login_required
 @admin_permission.require(http_exception=403)
 def admin_page():
     navbar = create_navbar_fd(navbar_conf, 'key.main.admin_page')

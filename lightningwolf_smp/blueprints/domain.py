@@ -10,6 +10,7 @@ from flask import (
     abort
 )
 
+from flask.ext.login import login_required
 from flask.ext.lwadmin.navbar import create_navbar_fd
 from lightningwolf_smp.application import app_permissions, navbar_conf
 
@@ -22,6 +23,7 @@ admin_permission = app_permissions['admin']
 
 
 @domain.route("/admin/domain/list", methods=["GET"])
+@login_required
 @admin_permission.require(http_exception=403)
 def domain_list():
     from lightningwolf_smp.models.domain import DomainPager
@@ -41,6 +43,7 @@ def domain_list():
 
 
 @domain.route('/admin/domain/create', methods=["GET", "POST"])
+@login_required
 @admin_permission.require(http_exception=403)
 def domain_create():
     pass
