@@ -47,3 +47,24 @@ def domain_list():
 @admin_permission.require(http_exception=403)
 def domain_create():
     pass
+
+
+@domain.route('/admin/domain/filter', methods=["POST"])
+@login_required
+@admin_permission.require(http_exception=403)
+def domain_filter():
+    pass
+
+
+@domain.route('/admin/domain/<int:domain_id>/edit', methods=["GET", "POST"])
+@login_required
+@admin_permission.require(http_exception=403)
+def domain_edit(domain_id):
+    pass
+
+
+@domain.route('/admin/domain/<int:domain_id>/delete', methods=["GET", "POST"])
+@login_required
+@admin_permission.require(http_exception=403)
+def domain_delete(domain_id):
+    pass

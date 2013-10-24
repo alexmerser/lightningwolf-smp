@@ -2,7 +2,6 @@
 # coding=utf8
 from flask_lwadmin.config import ConfigParser
 
-
 configuration = {
     'list': {
         'title': 'Domain List',
@@ -37,5 +36,11 @@ configuration = {
                 'call': 'set_del_button'
             }
         ],
+        'filter': {
+            'session_name': 'filter.domain',
+            'display': ['domain_name'],
+            'url': 'domain.domain_filter',
+            'type': ConfigParser.URL_INTERNAL,
+        }
     }
 }

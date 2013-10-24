@@ -6,8 +6,10 @@ import json
 import bcrypt
 
 
-from flask import session
-from flask import url_for
+from flask import (
+    session,
+    url_for
+)
 from flask.ext.login import current_user
 from flask_lwadmin.pager import Pager
 from sqlalchemy import exc
@@ -204,22 +206,24 @@ def is_unique_email(email, user_id=None):
 
 
 class UserPager(Pager):
-    def __init__(self, max_per_page=10, page=1):
-        Pager.__init__(self, max_per_page=max_per_page, page=page)
-        self.filter_data = {}
-
     def initialize(self, configuration):
-        # TODO: filter_data in this moment is get in blueprint for configuration too!
-        self.filter_data = get_user_filters()
-        self.set_count(get_user_list_count(self.filter_data))
-        Pager.initialize(self, configuration)
+        from lightningwolf_smp.forms.user import (
+            FormUsernameFilter,
+            FormUserBatchActions
+        )
+        self.configure(configuration)
+        filter_data = self.get_filter_data()
+        self.set_filter_form(FormUsernameFilter(**filter_data))
+        self.set_batch_form(FormUserBatchActions())
+        self.set_count(get_user_list_count(filter_data))
+        self.calculate_pages()
 
     def get_pk(self):
         return 'id'
 
     def get_results(self):
         if self.results is None:
-            self.results = get_user_list(self.filter_data, offset=self.get_offset(), limit=self.get_limit())
+            self.results = get_user_list(self.get_filter_data(), offset=self.get_offset(), limit=self.get_limit())
 
         return self.results
 
@@ -238,14 +242,3 @@ def get_user_list_count(filter_data):
         if filter_data['username'] is not None:
             query = query.filter(User.username.like('%' + filter_data['username'] + '%'))
     return query.count()
-
-
-def get_user_filters():
-    if 'filter.user' in session:
-        return session['filter.user']
-    else:
-        return {"username": None}
-
-
-def set_user_filters(filter_data):
-    session['filter.user'] = filter_data

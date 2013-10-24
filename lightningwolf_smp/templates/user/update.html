@@ -2,5 +2,5 @@
 {% import 'macros/update.html' as update_macros with context -%}
 
 {% block container %}
-    {{ update_macros.update(title=configuration['title'], configuration=configuration) }}
+    {{ update_macros.update(configuration=configuration) }}
 {% endblock %}

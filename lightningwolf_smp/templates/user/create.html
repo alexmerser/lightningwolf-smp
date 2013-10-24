@@ -2,5 +2,5 @@
 {% import 'macros/create.html' as create_macros with context -%}
 
 {% block container %}
-    {{ create_macros.create(title=configuration['title'], configuration=configuration) }}
+    {{ create_macros.create(configuration=configuration) }}
 {% endblock %}

@@ -1,13 +1,6 @@
 #!/usr/bin/env python
 # coding=utf8
 from flask_lwadmin.config import ConfigParser
-from lightningwolf_smp.models.user import get_user_filters
-from lightningwolf_smp.forms.user import (
-    FormUsernameFilter,
-    FormUserBatchActions
-)
-
-filter_data = get_user_filters()
 
 configuration = {
     'list': {
@@ -46,12 +39,12 @@ configuration = {
         'batch': {
             'url': 'user.user_batch',
             'type': ConfigParser.URL_INTERNAL,
-            'form': FormUserBatchActions()
         },
         'filter': {
+            'session_name': 'filter.user',
+            'display': ['username'],
             'url': 'user.user_filter',
-            'type': ConfigParser.URL_INTERNAL,
-            'form': FormUsernameFilter(**filter_data)
+            'type': ConfigParser.URL_INTERNAL
         }
     },
     'create': {

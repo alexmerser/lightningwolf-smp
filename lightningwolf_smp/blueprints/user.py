@@ -54,7 +54,10 @@ def user_list():
 @login_required
 @admin_permission.require(http_exception=403)
 def user_filter():
-    from lightningwolf_smp.models.user import set_user_filters
+    from lightningwolf_smp.models.user import UserPager
+    from lightningwolf_smp.blueprints.configs.user import configuration
+    pager = UserPager(page=1)
+    pager.initialize(configuration=configuration)
 
     action = request.args.get('action', '')
     if action == '_reset':
@@ -66,9 +69,9 @@ def user_filter():
 
     if form.validate_on_submit():
         if action == '_reset':
-            set_user_filters({'username': None})
+            pager.reset_filter_data()
         else:
-            set_user_filters({'username': form.data['username']})
+            pager.set_filter_data({'username': form.data['username']})
     else:
         flash(u'An error occurred in filter form', 'error')
 
