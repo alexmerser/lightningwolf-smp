@@ -3,13 +3,43 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to LightningWolf-SMP's documentation!
-=============================================
+LightningWolf-SMP
+=================
 
-Contents:
+Release v\ |version|. (:ref:`Installation <install>`)
+
+This project is simple **Server Management Panel** made in **Flask**.
+
+Admin Guide
+-----------
+
+This part of the documentation focuses on admininistrator work nedeed before panel installation.
 
 .. toctree::
    :maxdepth: 2
+
+   admin/intro
+
+
+User Guide
+----------
+
+This part of the documentation, which is mostly prose, begins with some background information about Lightningwolf-SMP,
+then focuses on step-by-step instructions for installation process of sys admin aplication.
+
+.. toctree::
+   :maxdepth: 2
+
+   user/intro
+   user/install
+
+Developer Guide
+---------------
+
+.. toctree::
+   :maxdepth: 2
+
+   dev/development
 
 
 
