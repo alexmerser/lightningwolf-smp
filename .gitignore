@@ -14,3 +14,4 @@ dist
 eggs
 sdist
 config
+_build
