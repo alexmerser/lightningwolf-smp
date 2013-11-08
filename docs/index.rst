@@ -19,6 +19,7 @@ This part of the documentation focuses on admininistrator work nedeed before pan
    :maxdepth: 2
 
    admin/intro
+   admin/xen
 
 
 User Guide
