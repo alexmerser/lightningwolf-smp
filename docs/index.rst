@@ -20,6 +20,7 @@ This part of the documentation focuses on admininistrator work nedeed before pan
 
    admin/intro
    admin/xen
+   admin/basic
 
 
 User Guide

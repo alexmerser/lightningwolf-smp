@@ -9,6 +9,8 @@ documentation is based on it.
 Creation of our work server instance
 ------------------------------------
 
+**All steps as root**
+
 1. First step you should check what distributions ara avaiable ::
 
     $ cd /usr/lib/xen-tools/
