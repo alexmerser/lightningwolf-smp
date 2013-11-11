@@ -11,6 +11,8 @@ In My example I'll use **lightningwolf.net** domain. Replace **lightningwolf.net
 For this example I'll use **192.168.0.1** IP address for reverse DNS. Replace it with your server IP address. In most of
 situations configuration for reverse DNS is not required.
 
+For this example ns1.lightningwolf.net IP address is  **192.168.0.1** and this is master DNS server.
+For this example ns2.lightningwolf.net IP address is  **192.168.0.2** and this is slave DNS server.
 
 Installation
 ------------
@@ -40,11 +42,18 @@ Because ``/etc/bind/sec`` folder must have write access ::
 Configuration
 -------------
 
-Configure the main Bind files. For Ubuntu instead of editing the file ``named.conf`` we will edit another files ::
+Configure the main Bind files. For Ubuntu instead of editing the file ``named.conf`` we will edit another files.
+
+named.conf.local
+^^^^^^^^^^^^^^^^
+
+Edit it by vim ::
 
     $ sudo vim /etc/bind/named.conf.local
 
-This is where we will insert our zones. Insert this in the named.conf.local file:
+This is where we will insert our zones.
+
+Insert this in the named.conf.local file for **master** dns server:
 
 | # This is the zone definition.
 | zone "lightningwolf.net" {
@@ -60,13 +69,39 @@ This is where we will insert our zones. Insert this in the named.conf.local file
 |     file "/etc/bind/rev/rev.1.0.168.192.in-addr.arpa";
 | };
 
-If there is a need to setup forwarders there is another file to edit::
+Insert this in the named.conf.local file for **slave** dns server:
+
+| # This is the zone definition.
+| zone "lightningwolf.net" IN {
+|    type slave;
+|    file "sec/lightningwolf.net.db";
+|    masters { 192.168.0.1; };
+| };
+
+named.conf.options
+^^^^^^^^^^^^^^^^^^
+Edit it by vim ::
 
     $ sudo vim /etc/bind/named.conf.options
+
+Because I have slave DNS there is a need to add it`s IP to ``allow-transfer`` for **master**:
+
+| // My network
+| allow-transfer {
+|         192.168.1.2;
+| };
+
+Because I have slave DNS there is a need to add it`s IP to ``allow-transfer`` for **slave**:
+
+| // My network
+| allow-transfer {
+|         192.168.1.1;
+| };
+
+**If there is a need to setup forwarders**
 
 Replace **192.168.1.1** below with the address of your provider's DNS server
 
 | forwarders {
-|    # Replace the address below with the address of your provider's DNS server
-|    123.123.123.123;
+|    192.168.1.1;
 | };
