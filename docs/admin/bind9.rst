@@ -86,7 +86,7 @@ Insert this in the named.conf.local file for **slave** dns server:
     # This is the zone definition for reverse DNS.
     zone "0.168.192.in-addr.arpa" {
         type master;
-        file "/etc/bind/rev/rev.0.168.192.in-addr.arpa";
+        file "/etc/bind/pri/rev.0.168.192.in-addr.arpa";
     };
     </pre>
 
@@ -134,7 +134,7 @@ Replace **192.168.1.1** below with the address of your provider's DNS server
 zone.db
 ^^^^^^^
 
-Now wee need edit master zone file ::
+Now we need to edit master zone file ::
 
     $ sudo vim /etc/bind/pri/lightningwolf.net.db
 
@@ -170,3 +170,54 @@ Where:
   * **sds** - example of ``CNAME`` in this situation is for bucket sds.lightningwolf.net in Tiktalik like S3 file store
   * **\*** - all rest transfer to ``192.168.0.3`` in my example
 
+Optional rev.zone.db
+^^^^^^^^^^^^^^^^^^^^
+
+Let's create the reverse DNS zone file ::
+
+    sudo vim /etc/bind/pri/rev.0.168.192.in-addr.arpa
+
+Copy and paste the following text, modify as needed:
+
+.. raw:: html
+
+    <pre>
+    // The number before IN PTR lightningwolf.net is the machine address of the DNS server. in my case, it's 3, as my IP address is 192.168.0.3.
+    @ IN SOA ns1.lightningwolf.net. root.ns1.lightningwolf.net. (
+                                    2006081401;
+                                    28800;
+                                    604800;
+                                    604800;
+                                    86400
+    )
+
+                    IN    NS     ns1.lightningwolf.net.
+                    IN    NS     ns2.lightningwolf.net.
+    3               IN    PTR    lightningwolf.net
+    </pre>
+
+Run and Checks
+--------------
+
+Ok, now you just need to restart bind ::
+
+    $ sudo service bind9 restart
+
+We can now test the new DNS server...
+
+Modify the file resolv.conf ::
+
+    $ sudo vim /etc/resolv.conf
+
+Enter the following:
+
+.. raw:: html
+
+    <pre>
+    search lightningwolf.net
+    nameserver 192.168.0.1
+    </pre>
+
+Now, test your DNS ::
+
+    $ dig lightningwolf.net
