@@ -55,28 +55,40 @@ This is where we will insert our zones.
 
 Insert this in the named.conf.local file for **master** dns server:
 
-| # This is the zone definition.
-| zone "lightningwolf.net" {
-|     type master;
-|     file "/etc/bind/pri/lightningwolf.net.db";
-| };
+.. raw:: html
 
-   If we need reverse DNS also add:
-
-| # This is the zone definition for reverse DNS.
-| zone "1.0.168.192.in-addr.arpa" {
-|     type master;
-|     file "/etc/bind/rev/rev.1.0.168.192.in-addr.arpa";
-| };
+    <pre>
+    # This is the zone definition.
+    zone "lightningwolf.net" {
+        type master;
+        file "/etc/bind/pri/lightningwolf.net.db";
+    };
+    </pre>
 
 Insert this in the named.conf.local file for **slave** dns server:
 
-| # This is the zone definition.
-| zone "lightningwolf.net" IN {
-|    type slave;
-|    file "sec/lightningwolf.net.db";
-|    masters { 192.168.0.1; };
-| };
+.. raw:: html
+
+    <pre>
+    # This is the zone definition.
+    zone "lightningwolf.net" IN {
+       type slave;
+       file "sec/lightningwolf.net.db";
+       masters { 192.168.0.1; };
+    };
+    </pre>
+
+**If we need reverse DNS also add into master dns server:**
+
+.. raw:: html
+
+    <pre>
+    # This is the zone definition for reverse DNS.
+    zone "0.168.192.in-addr.arpa" {
+        type master;
+        file "/etc/bind/rev/rev.0.168.192.in-addr.arpa";
+    };
+    </pre>
 
 named.conf.options
 ^^^^^^^^^^^^^^^^^^
@@ -86,22 +98,75 @@ Edit it by vim ::
 
 Because I have slave DNS there is a need to add it`s IP to ``allow-transfer`` for **master**:
 
-| // My network
-| allow-transfer {
-|         192.168.1.2;
-| };
+.. raw:: html
+
+    <pre>
+    // My network
+    allow-transfer {
+            192.168.1.2;
+    };
+    </pre>
 
 Because I have slave DNS there is a need to add it`s IP to ``allow-transfer`` for **slave**:
 
-| // My network
-| allow-transfer {
-|         192.168.1.1;
-| };
+.. raw:: html
+
+    <pre>
+    // My network
+    allow-transfer {
+            192.168.1.1;
+    };
+    </pre>
 
 **If there is a need to setup forwarders**
 
 Replace **192.168.1.1** below with the address of your provider's DNS server
 
-| forwarders {
-|    192.168.1.1;
-| };
+.. raw:: html
+
+    <pre>
+    forwarders {
+       192.168.1.1;
+    };
+    </pre>
+
+
+zone.db
+^^^^^^^
+
+Now wee need edit master zone file ::
+
+    $ sudo vim /etc/bind/pri/lightningwolf.net.db
+
+.. raw:: html
+
+    <pre>
+    @       IN      SOA     ns1.lightningwolf.net. root.ns1.lightningwolf.net. (
+                                    2013111101
+                                    28800
+                                    7200
+                                    432000
+                                    86400
+    )
+                    IN      NS      ns1.lightningwolf.net.
+                    IN      NS      ns2.lightningwolf.net.
+                    MX      10      mta.lightningwolf.net.
+
+    @               IN      A       192.168.0.3
+    mta             IN      A       192.168.0.4
+    www             IN      A       192.168.0.3
+    ns1             IN      A       192.168.0.1
+    ns2             IN      A       192.168.0.2
+    sds             IN      CNAME   sds.tiktalik.com.
+    *               IN      A       192.168.0.3
+    </pre>
+
+Where:
+
+  * **mta** - mail server name
+  * **ns1** - my first master dns server name
+  * **ns2** - my secondary slave dns server name
+  * **www** - standard form web server name
+  * **sds** - example of ``CNAME`` in this situation is for bucket sds.lightningwolf.net in Tiktalik like S3 file store
+  * **\*** - all rest transfer to ``192.168.0.3`` in my example
+
