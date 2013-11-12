@@ -7,6 +7,7 @@ LightningWolf-SMP
 =================
 
 Release v\ |version|. (:ref:`Installation <install>`)
+License: `Creative Commons  Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0) <http://creativecommons.org/licenses/by-sa/3.0/>`_
 
 This project is simple **Server Management Panel** made in **Flask**.
 
