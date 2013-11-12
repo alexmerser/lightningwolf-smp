@@ -73,7 +73,7 @@ Insert this in the named.conf.local file for **slave** dns server:
     # This is the zone definition.
     zone "lightningwolf.net" IN {
        type slave;
-       file "sec/lightningwolf.net.db";
+       file "/etc/bind/sec/lightningwolf.net.db";
        masters { 192.168.0.1; };
     };
     </pre>
@@ -141,6 +141,7 @@ Now we need to edit master zone file ::
 .. raw:: html
 
     <pre>
+    $TTL 86400 ; 1 day
     @       IN      SOA     ns1.lightningwolf.net. root.ns1.lightningwolf.net. (
                                     2013111101
                                     28800
