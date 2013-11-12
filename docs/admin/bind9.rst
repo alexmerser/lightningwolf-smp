@@ -244,3 +244,8 @@ Troubleshooting
 
 Best placec to check is `Troubleshooting <https://help.ubuntu.com/lts/serverguide/dns-troubleshooting.html>`_.
 
+Checking if ns is visable. For example ::
+
+    $ nslookup ns1.example.com ns1.domena.pl
+
+Use your provider nameserver.
