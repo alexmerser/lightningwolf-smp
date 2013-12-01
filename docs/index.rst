@@ -23,6 +23,7 @@ This part of the documentation focuses on admininistrator work nedeed before pan
    admin/xen
    admin/basic
    admin/bind9
+   admin/lamp
 
 
 User Guide
