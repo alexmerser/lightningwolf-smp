@@ -24,6 +24,7 @@ This part of the documentation focuses on admininistrator work nedeed before pan
    admin/basic
    admin/bind9
    admin/lamp
+   admin/nagios
 
 
 User Guide
