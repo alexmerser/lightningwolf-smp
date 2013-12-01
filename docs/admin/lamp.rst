@@ -177,6 +177,19 @@ it will be **wolf.lightningwolf.net**
     RewriteCond %{SERVER_PORT} 80
     RewriteRule ^(.*) https://wolf.lightningwolf.net/$1 [L]
 
+Now create folder for customers pages
+
+::
+
+    $ mkdir /var/www/customers
+
+and set no access in this folder by creating ``.htaccess`` file with this settings
+
+::
+
+    RewriteEngine Off
+    deny from all
+
 
 MySQL Configuration
 ^^^^^^^^^^^^^^^^^^^
