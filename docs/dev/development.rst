@@ -4,6 +4,10 @@ lightningwolf-smp - Development
 Requirements
 ------------
 
+- python-dev
+- libmysqlclient-dev
+- libffi-dev
+
 Python
 ``````
 All Python requirements are in `requirements.txt` file.
