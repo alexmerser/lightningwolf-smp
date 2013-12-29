@@ -23,9 +23,13 @@ Now we add some additional important packages
 
 ::
 
-    $ apt-get install php-apc php5-memcache php5-curl php5-gd php-xml-parser php5-dev
+    $ apt-get install php-apc php5-memcache php5-memcached php5-curl php5-gd php-xml-parser php5-dev
 
 Memcache is also important
+
+::
+
+    $ apt-get install memcached
 
 ::
 
@@ -35,10 +39,17 @@ Also phpMyAdmin
 
 ::
 
-    apt-get install phpmyadmin
+    apt-get install phpmyadmin php5-mcrypt
 
 When ask chose Apache and remeber to give MySQL root password in basic configuration process.
 
+In Ubuntu 13.10
+
+::
+
+    sudo ln -s /etc/php5/conf.d/mcrypt.ini /etc/php5/mods-available
+    sudo php5enmod mcrypt
+    sudo service apache2 restart
 
 Configuration
 -------------
