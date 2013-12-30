@@ -5,6 +5,10 @@ from flask_lwadmin.config import ConfigParser
 configuration = {
     'list': {
         'title': 'Users List',
+        'action': {
+            'url': 'user.user_list',
+            'type': ConfigParser.URL_INTERNAL
+        },
         'display': [
             {'key': 'id', 'label': 'Id'},
             {'key': 'username', 'label': 'Username', 'icon': 'icon-user'},

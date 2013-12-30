@@ -5,6 +5,10 @@ from flask_lwadmin.config import ConfigParser
 configuration = {
     'list': {
         'title': 'Domain List',
+        'action': {
+            'url': 'domain.domain_list',
+            'type': ConfigParser.URL_INTERNAL
+        },
         'display': [
             {'key': 'id', 'label': 'Id'},
             {'key': 'domain_name', 'label': 'Domain Name'},
