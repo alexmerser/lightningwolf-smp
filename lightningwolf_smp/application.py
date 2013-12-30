@@ -13,8 +13,7 @@ from flask.ext.login import LoginManager, current_user
 from flask.ext.principal import (
     Principal, 
     Permission, 
-    ActionNeed, 
-    RoleNeed, 
+    RoleNeed,
     identity_loaded, 
     UserNeed)
 from flask.ext.babel import Babel
@@ -48,9 +47,7 @@ db = SQLAlchemy(app)
 # Flask-Login
 def init_login():
     login_manager = LoginManager()
-
     login_manager.login_view = "/login/"
-
     login_manager.init_app(app)
 
     @login_manager.user_loader
@@ -76,6 +73,7 @@ admin_permission.description = "Admin permission"
 
 app_needs = {'admin': admin_need, 'user': user_need}
 app_permissions = {'user': user_permission, 'admin': admin_permission}
+
 
 @identity_loaded.connect_via(app)
 def on_identity_loaded(sender, identity):
