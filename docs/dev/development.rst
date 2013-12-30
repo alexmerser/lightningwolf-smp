@@ -92,12 +92,16 @@ Create Mysql Databese with user
 
     #!/usr/bin/env python
     # coding=utf8
+    APP_HOST = 127.0.0.1
+    APP_PORT = 5000
 
-    DEBUG = True
     SECRET_KEY = '<write something here>'
     SQLALCHEMY_DATABASE_URI = 'mysql://<user>:<pass>@<ip or hostname>/<db name>'
     SENTRY_DSN = '<Nothing or Your Sentry DSN>'
 
+    DEBUG = True
+    DEBUG_RELOAD = True
+    DEBUG_TB_INTERCEPT_REDIRECTS = False
 
 #. Use this config in virtual environment:
 

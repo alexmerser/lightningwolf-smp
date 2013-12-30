@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding=utf8
 import os
+import sys
 
 
 from flask import Flask
@@ -20,13 +21,16 @@ from flask.ext.babel import Babel
 from raven.contrib.flask import Sentry
 from flask_debugtoolbar import DebugToolbarExtension
 
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
 app = Flask(__name__)
 
 # Configuration Loader
 app.config.from_object('lightningwolf_smp.Config')
-envvar = 'LIGHTNINGWOLF_SETTINGS'
-if os.environ.get(envvar, None):
-    app.config.from_envvar(envvar)
+env_var = 'LIGHTNINGWOLF_SETTINGS'
+if os.environ.get(env_var, None):
+    app.config.from_envvar(env_var)
 
 # Babel
 babel = Babel(app)
