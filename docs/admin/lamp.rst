@@ -43,6 +43,19 @@ Also phpMyAdmin
 
 When ask chose Apache and remeber to give MySQL root password in basic configuration process.
 
+
+And nice to have for Symfony2
+
+::
+
+    apt-get install php5-intl
+
+And for other projects:
+
+::
+
+    apt-get install php5-imagick libmagickcore5-extra php5-tidy
+
 In Ubuntu 13.10
 
 ::
