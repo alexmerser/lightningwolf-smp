@@ -54,7 +54,7 @@ And for other projects:
 
 ::
 
-    apt-get install php5-imagick libmagickcore5-extra php5-tidy
+    apt-get install imagemagick php5-imagick libmagickcore5-extra php5-tidy
 
 In Ubuntu 13.10
 
