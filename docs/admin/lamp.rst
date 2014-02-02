@@ -64,6 +64,12 @@ In Ubuntu 13.10
     sudo php5enmod mcrypt
     sudo service apache2 restart
 
+and ``php5-json``
+
+::
+
+    apt-get install php5-json
+
 Configuration
 -------------
 
