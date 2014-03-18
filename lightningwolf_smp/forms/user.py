@@ -6,7 +6,10 @@ from wtforms import (
     validators
 )
 
-from lightningwolf_smp.models.user_base import is_unique_email, is_unique_user
+from lightningwolf_smp.application import db
+from lightningwolf_smp.models.user_query import UserQuery
+
+uq = UserQuery(db=db)
 
 
 class FormUserAdd(Form):
@@ -63,11 +66,11 @@ class FormUserAdd(Form):
     )
 
     def validate_username(self, field):
-        if not is_unique_user(field.data):
+        if not uq.is_unique_user(field.data):
             raise validators.ValidationError('This username: %s is not unique in system.' % field.data)
 
     def validate_email(self, field):
-        if not is_unique_email(field.data):
+        if not uq.is_unique_email(field.data):
             raise validators.ValidationError('This e-mail: %s is not unique in system.' % field.data)
 
 
@@ -131,7 +134,7 @@ class FormUserChangeEmail(Form):
     )
 
     def validate_email(self, field):
-        if not is_unique_email(field.data, user_id=self.id):
+        if not uq.is_unique_email(field.data, user_id=self.id):
             raise validators.ValidationError('This e-mail: %s is not unique in system.' % field.data)
 
 

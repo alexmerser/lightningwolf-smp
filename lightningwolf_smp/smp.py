@@ -6,7 +6,7 @@ Usage:
   smp.py [--config=<config>] start
   smp.py init:config
   smp.py [--config=<config>] init:db
-  smp.py [--config=<config>] (user:create | user:password | user:delete) <username>
+  smp.py [--config=<config>] (user:create | user:password | user:promote | user:delete) <username>
   smp.py (-h | --help)
   smp.py --version
 

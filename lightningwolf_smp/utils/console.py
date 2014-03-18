@@ -66,5 +66,16 @@ def parse_arguments(arguments):
             uq.edit_password(user, password)
             print("Password for user: %s changed." % username)
         else:
-            print("This username %s not uexists in system." % username)
+            print("This username %s not exists in system." % username)
 
+    if arguments['user:promote']:
+        from lightningwolf_smp.application import db
+        from lightningwolf_smp.models.user_query import UserQuery
+        uq = UserQuery(db=db)
+        username = arguments['<username>']
+        user = uq.get_user_by_username(username=username)
+        if user:
+            uq.promote(user)
+            print("User: %s promoted." % username)
+        else:
+            print("This username %s not exists in system." % username)

@@ -87,6 +87,12 @@ class UserQuery(object):
         user.save(self.db.session)
         return True
 
+    def promote(self, user):
+        user.permissions = json.dumps(admin_permissions, indent=4, sort_keys=True)
+
+        user.save(self.db.session)
+        return True
+
     def is_unique_user(self, username):
         if self.db.session.query(User).filter_by(username=username).first() is None:
             return True
