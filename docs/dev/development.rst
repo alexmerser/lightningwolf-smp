@@ -92,7 +92,7 @@ Create Mysql Databese with user
 
     #!/usr/bin/env python
     # coding=utf8
-    APP_HOST = 127.0.0.1
+    APP_HOST = '0.0.0.0'
     APP_PORT = 5000
 
     SECRET_KEY = '<write something here>'
