@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 # coding=utf8
+from lightningwolf_smp.models import Base
 from lightningwolf_smp.application import db
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship, backref
 
 from flask import (
-    session,
     url_for
 )
 
@@ -12,15 +14,23 @@ from flask_lwadmin.pager import Pager
 filter_display = ['domain_name']
 
 
-class Domain(db.Model):
+class Domain(Base):
     __tablename__ = 'domain'
 
-    id = db.Column(db.Integer, primary_key=True)
-    parent_id = db.Column(db.Integer, nullable=True)
-    domain_name = db.Column(db.String(255), unique=True, nullable=False)
+    id = Column(Integer, primary_key=True)
+    parent_id = Column(Integer, nullable=True)
+    domain_name = Column(String(255), unique=True, nullable=False)
 
-    customer_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    customer = db.relationship('User', backref=db.backref('domain', lazy='dynamic'))
+    customer_id = Column(Integer, ForeignKey('user.id'))
+    customer = relationship('User', backref=backref('domain', lazy='dynamic'))
+
+    def save(self):
+        db.session.add(self)
+        return db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        return db.session.commit()
 
     def __repr__(self):
         return '<Domain %r>' % self.domain_name

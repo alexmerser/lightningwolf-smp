@@ -1,16 +1,27 @@
 #!/usr/bin/env python
 # coding=utf8
+from lightningwolf_smp.models import Base
 from lightningwolf_smp.application import db
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship, backref
 
 
-class MailVirtualDomain(db.Model):
+class MailVirtualDomain(Base):
     __tablename__ = 'mail_virtual_domain'
 
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), unique=True, nullable=False)
+    id = Column(Integer, primary_key=True)
+    name = Column(String(50), unique=True, nullable=False)
 
-    customer_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    customer = db.relationship('User', backref=db.backref('mail_virtual_domain', lazy='dynamic'))
+    customer_id = Column(Integer, ForeignKey('user.id'))
+    customer = relationship('User', backref=backref('mail_virtual_domain', lazy='dynamic'))
+
+    def save(self):
+        db.session.add(self)
+        return db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        return db.session.commit()
 
     def __repr__(self):
         return '<MailVirtualDomain %r>' % self.name
@@ -19,16 +30,24 @@ class MailVirtualDomain(db.Model):
         return self.name
 
 
-class MailVirtualUser(db.Model):
+class MailVirtualUser(Base):
     __tablename__ = 'mail_virtual_user'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = Column(Integer, primary_key=True)
 
-    domain_id = db.Column(db.Integer, db.ForeignKey('mail_virtual_domain.id'))
-    domain = db.relationship('MailVirtualDomain', backref=db.backref('mail_virtual_user', lazy='dynamic'))
+    domain_id = Column(Integer, ForeignKey('mail_virtual_domain.id'))
+    domain = relationship('MailVirtualDomain', backref=backref('mail_virtual_user', lazy='dynamic'))
 
-    password = db.Column(db.String(106), nullable=False)
-    email = db.Column(db.String(100), unique=True, nullable=False)
+    password = Column(String(106), nullable=False)
+    email = Column(String(100), unique=True, nullable=False)
+
+    def save(self):
+        db.session.add(self)
+        return db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        return db.session.commit()
 
     def __repr__(self):
         return '<MailVirtualUser %r>' % self.email
@@ -37,16 +56,24 @@ class MailVirtualUser(db.Model):
         return self.email
 
 
-class MailVirtualAlias(db.Model):
+class MailVirtualAlias(Base):
     __tablename__ = 'mail_virtual_alias'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = Column(Integer, primary_key=True)
 
-    domain_id = db.Column(db.Integer, db.ForeignKey('mail_virtual_domain.id'))
-    domain = db.relationship('MailVirtualDomain', backref=db.backref('mail_virtual_alias', lazy='dynamic'))
+    domain_id = Column(Integer, ForeignKey('mail_virtual_domain.id'))
+    domain = relationship('MailVirtualDomain', backref=backref('mail_virtual_alias', lazy='dynamic'))
 
-    source = db.Column(db.String(100), nullable=False)
-    destination = db.Column(db.String(100), nullable=False)
+    source = Column(String(100), nullable=False)
+    destination = Column(String(100), nullable=False)
+
+    def save(self):
+        db.session.add(self)
+        return db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        return db.session.commit()
 
     def __repr__(self):
         return '<MailVirtualAlias %r -> %r>' % (self.source, self.destination)

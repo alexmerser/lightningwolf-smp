@@ -6,14 +6,14 @@ import json
 import bcrypt
 
 
+from lightningwolf_smp.models import Base
+from lightningwolf_smp.application import db
+from sqlalchemy import exc, Column, Integer, String, Text, Boolean
 from flask import (
-    session,
     url_for
 )
 from flask.ext.login import current_user
 from flask_lwadmin.pager import Pager
-from sqlalchemy import exc
-from lightningwolf_smp.application import db
 
 
 admin_permissions = {
@@ -24,24 +24,24 @@ user_permissions = {
 }
 
 
-class User(db.Model):
+class User(Base):
     __tablename__ = 'user'
 
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True)
-    email = db.Column(db.String(120), unique=True)
-    salt = db.Column(db.String(128), nullable=False)
-    password = db.Column(db.String(128), nullable=False)
-    permissions = db.Column(db.Text, nullable=False)
+    id = Column(Integer, primary_key=True)
+    username = Column(String(80), unique=True)
+    email = Column(String(120), unique=True)
+    salt = Column(String(128), nullable=False)
+    password = Column(String(128), nullable=False)
+    permissions = Column(Text, nullable=False)
+    active = Column(Boolean, nullable=False)
 
     # Flask-Login integration
     @staticmethod
     def is_authenticated():
         return True
 
-    @staticmethod
-    def is_active():
-        return True
+    def is_active(self):
+        return self.active
 
     @staticmethod
     def is_anonymous():
