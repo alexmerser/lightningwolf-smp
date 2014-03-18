@@ -14,3 +14,7 @@ include DESCRIPTION
 include PACKAGE_NAME
 include requirements.txt
 include *.py
+include lightningwolf_smp/alembic.ini
+include lightningwolf_smp/alembic/script.py.mako
+include lightningwolf_smp/alembic/README
+include lightningwolf_smp/alembic/versions/*.py
