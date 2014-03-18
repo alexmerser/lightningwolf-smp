@@ -26,7 +26,10 @@ class UserQuery(object):
     def get_user(self, user_id):
         return self.db.session.query(User).get(user_id)
 
-    def create_user(self, username, email, password, credential='user', cli=False):
+    def get_user_by_username(self, username):
+        return self.db.session.query(User).filter(User.username == username).first()
+
+    def create_user(self, username, email, password, credential='user', active=True, cli=False):
         salt = hashlib.md5(str(uuid.uuid4())).hexdigest()
         salted = hashlib.sha512(password + salt).hexdigest()
         hashed = bcrypt.hashpw(salted, bcrypt.gensalt(12))
@@ -49,7 +52,8 @@ class UserQuery(object):
             email=email,
             salt=salt,
             password=hashed,
-            permissions=json.dumps(user_credentials, indent=4, sort_keys=True)
+            permissions=json.dumps(user_credentials, indent=4, sort_keys=True),
+            active=active
         )
         user.save(self.db.session)
         return True

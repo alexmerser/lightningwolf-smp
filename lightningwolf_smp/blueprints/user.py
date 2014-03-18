@@ -99,7 +99,8 @@ def user_create():
             username=form.data['username'],
             email=form.data['email'],
             password=form.data['password'],
-            credential=form.data['perm']
+            credential=form.data['perm'],
+            active=True
         )
         if rs is True:
             flash(u'The new user is created', 'success')
