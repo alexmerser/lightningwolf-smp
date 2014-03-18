@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # coding=utf8
 from lightningwolf_smp.models import Base
-from lightningwolf_smp.application import db
 from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Text
 from sqlalchemy.orm import relationship, backref
 
@@ -17,13 +16,13 @@ class FtpGroup(Base):
     customer_id = Column(Integer, ForeignKey('user.id'))
     customer = relationship('User', backref=backref('ftp_group', lazy='dynamic'))
 
-    def save(self):
-        db.session.add(self)
-        return db.session.commit()
+    def save(self, session):
+        session.add(self)
+        return session.commit()
 
-    def delete(self):
-        db.session.delete(self)
-        return db.session.commit()
+    def delete(self, session):
+        session.delete(self)
+        return session.commit()
 
     def __repr__(self):
         return '<FtpGroup %r>' % self.group_name
@@ -47,13 +46,13 @@ class FtpUsers(Base):
     customer_id = Column(Integer, ForeignKey('user.id'))
     customer = relationship('User', backref=backref('ftp_user', lazy='dynamic'))
 
-    def save(self):
-        db.session.add(self)
-        return db.session.commit()
+    def save(self, session):
+        session.add(self)
+        return session.commit()
 
-    def delete(self):
-        db.session.delete(self)
-        return db.session.commit()
+    def delete(self, session):
+        session.delete(self)
+        return session.commit()
 
     def __repr__(self):
         return '<FtpUsers %r>' % self.userid
@@ -72,13 +71,13 @@ class FtpLoginHistory(Base):
     protocol = Column(Text, nullable=False)
     when = Column(DateTime, nullable=False)
 
-    def save(self):
-        db.session.add(self)
-        return db.session.commit()
+    def save(self, session):
+        session.add(self)
+        return session.commit()
 
-    def delete(self):
-        db.session.delete(self)
-        return db.session.commit()
+    def delete(self, session):
+        session.delete(self)
+        return session.commit()
 
     def __repr__(self):
         return '<FtpLoginHistory %r>' % self.userid

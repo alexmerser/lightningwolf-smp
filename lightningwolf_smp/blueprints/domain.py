@@ -26,7 +26,7 @@ admin_permission = app_permissions['admin']
 @login_required
 @admin_permission.require(http_exception=403)
 def domain_list():
-    from lightningwolf_smp.models.domain import DomainPager
+    from lightningwolf_smp.models.domain_pager import DomainPager
     from lightningwolf_smp.blueprints.configs.domain import configuration
     page = request.args.get('page', 1)
     pager = DomainPager(page=page)

@@ -6,7 +6,7 @@ from wtforms import (
     validators
 )
 
-from lightningwolf_smp.models.user import is_unique_email, is_unique_user
+from lightningwolf_smp.models.user_base import is_unique_email, is_unique_user
 
 
 class FormUserAdd(Form):

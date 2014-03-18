@@ -12,7 +12,7 @@ from flask import (
 
 from flask.ext.login import login_required
 from flask.ext.lwadmin.navbar import create_navbar_fd
-from lightningwolf_smp.application import app_permissions, navbar_conf
+from lightningwolf_smp.application import app_permissions, navbar_conf, db
 
 
 user = Blueprint('user', __name__)
@@ -34,7 +34,7 @@ def user_page():
 @login_required
 @admin_permission.require(http_exception=403)
 def user_list():
-    from lightningwolf_smp.models.user import UserPager
+    from lightningwolf_smp.models.user_pager import UserPager
     from lightningwolf_smp.blueprints.configs.user import configuration
     page = request.args.get('page', 1)
     pager = UserPager(page=page)
@@ -54,7 +54,7 @@ def user_list():
 @login_required
 @admin_permission.require(http_exception=403)
 def user_filter():
-    from lightningwolf_smp.models.user import UserPager
+    from lightningwolf_smp.models.user_pager import UserPager
     from lightningwolf_smp.blueprints.configs.user import configuration
     pager = UserPager(page=1)
     pager.initialize(configuration=configuration)
@@ -93,8 +93,9 @@ def user_create():
     from lightningwolf_smp.forms.user import FormUserAdd
     form = FormUserAdd()
     if form.validate_on_submit():
-        from lightningwolf_smp.models.user import create_user
-        rs = create_user(
+        from lightningwolf_smp.models.user_query import UserQuery
+        uq = UserQuery(db=db)
+        rs = uq.create_user(
             username=form.data['username'],
             email=form.data['email'],
             password=form.data['password'],
@@ -123,8 +124,9 @@ def user_create():
 @admin_permission.require(http_exception=403)
 def user_edit(user_id):
     from lightningwolf_smp.forms.user import FormUserEdit
-    from lightningwolf_smp.models.user import get_user
-    user_object = get_user(user_id)
+    from lightningwolf_smp.models.user_query import UserQuery
+    uq = UserQuery(db=db)
+    user_object = uq.get_user(user_id)
     if user_object is None:
         abort(404)
 
@@ -138,8 +140,7 @@ def user_edit(user_id):
         form = FormUserEdit()
         form.setId(user_object.get_id())
         if form.validate_on_submit():
-            from lightningwolf_smp.models.user import edit_user
-            rs = edit_user(
+            rs = uq.edit_user(
                 user=user_object,
                 email=form.data['email'],
                 password=form.data['password'],
@@ -169,8 +170,9 @@ def user_edit(user_id):
 @admin_permission.require(http_exception=403)
 def user_del(user_id):
     from flask_wtf import Form
-    from lightningwolf_smp.models.user import get_user
-    user_object = get_user(user_id)
+    from lightningwolf_smp.models.user_query import UserQuery
+    uq = UserQuery(db=db)
+    user_object = uq.get_user(user_id)
     if user_object is None:
         abort(404)
     form = Form()

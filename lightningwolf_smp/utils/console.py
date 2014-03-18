@@ -14,7 +14,7 @@ def parse_arguments(arguments):
         print("Tables in Database created")
     if arguments['user:create']:
         import getpass
-        from lightningwolf_smp.models.user import create_user, is_unique_user, is_valid_email, is_unique_email
+        from lightningwolf_smp.models.user_base import create_user, is_unique_user, is_valid_email, is_unique_email
         username = arguments['<username>']
         valid_username = False
         while not valid_username:
@@ -54,7 +54,7 @@ def parse_arguments(arguments):
     if arguments['user:password']:
         import getpass
         from lightningwolf_smp.application import db
-        from lightningwolf_smp.models.user import User, edit_password
+        from lightningwolf_smp.models.user_base import User, edit_password
         username = arguments['<username>']
         user = db.session.query(User).filter(User.username == username).first()
         if user:
